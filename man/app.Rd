@@ -2,15 +2,16 @@
 % Please edit documentation in R/app.R
 \name{app}
 \alias{app}
-\title{app
-Generate the Shiny app}
+\title{app}
 \usage{
 app(...)
+}
+\arguments{
+\item{...}{additional arguments}
 }
 \value{
 a Shiny app object
 }
 \description{
-app
 Generate the Shiny app
 }

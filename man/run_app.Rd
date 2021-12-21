@@ -2,12 +2,13 @@
 % Please edit documentation in R/app.R
 \name{run_app}
 \alias{run_app}
-\title{run_app
-Run the Shiny app}
+\title{run_app}
 \usage{
 run_app(...)
 }
+\arguments{
+\item{...}{additional arguments}
+}
 \description{
-run_app
 Run the Shiny app
 }
