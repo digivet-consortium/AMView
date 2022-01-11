@@ -8,7 +8,9 @@ app_ui <- function() {
 
 
                tabPanel("Shiny app readme",
-                        includeMarkdown("README.md")),
+                        includeMarkdown(
+                            system.file("README.md",
+                                        package = "shinyTemplate"))),
 
                tabPanel("Example app",
                         h1("Hello Shiny!"),
