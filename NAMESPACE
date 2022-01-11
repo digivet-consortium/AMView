@@ -2,6 +2,7 @@
 
 export(app)
 export(run_app)
+import(markdown)
 import(shiny)
 importFrom(shiny,runApp)
 importFrom(shiny,shinyApp)
