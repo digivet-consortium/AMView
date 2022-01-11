@@ -1,11 +1,11 @@
 Package: shinyTemplate
 Title: A Template for Shiny App Packages
 Version: 1.0
-Authors@R: 
+Authors@R:
     person("Wiktor", "Gustafsson", ,
     "wiktor.gustafsson@sva.se",
     role = c("aut", "cre"))
-Description: Provides a template for producing an Shiny app which is 
+Description: Provides a template for producing an Shiny app which is
              deployed as an R package.
 License: GPL (>= 3)
 Encoding: UTF-8
