@@ -6,7 +6,7 @@ LABEL maintainer "Wiktor Gustafsson <wiktor.gustafsson@sva.se>"
 RUN R -e "install.packages(c('shiny', 'markdown'))"
 
 # Install package
-RUN R CMD INSTALL .
+RUN cd .. && R CMD build s && R CMD INSTALL shinyTemplate_*.tar.gz
 
 EXPOSE 3838
 
