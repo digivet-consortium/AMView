@@ -14,3 +14,7 @@ RoxygenNote: 7.1.2
 Depends: R (>= 4.0.0)
 Imports:
     shiny
+Collate: 
+    'ui.R'
+    'server.R'
+    'app.R'
