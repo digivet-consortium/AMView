@@ -3,13 +3,10 @@ FROM rocker/r-base:latest
 LABEL maintainer "Wiktor Gustafsson <wiktor.gustafsson@sva.se>"
 
 # install dependenices
-RUN R -e "install.packages(c('shiny', 'remotes'))"
+RUN R -e "install.packages(c('shiny', 'markdown'))"
 
-# copy the app to the image
-RUN mkdir /root/shinyTemplate
-COPY . /root/shinyTemplate
-
-RUN R -e "remotes::install_local('/root/shinyTemplate')"
+# Install package
+RUN R CMD INSTALL .
 
 EXPOSE 3838
 
