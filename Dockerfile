@@ -2,9 +2,6 @@ FROM rocker/r-base:latest
 
 LABEL maintainer "Wiktor Gustafsson <wiktor.gustafsson@sva.se>"
 
-# set CRAN as repo
-RUN R -e "options(repos='https://cloud.r-project.org/')"
-
 # install dependenices
 RUN R -e "install.packages(c('shiny', 'remotes'))"
 
