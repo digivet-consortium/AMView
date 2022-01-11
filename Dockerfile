@@ -2,15 +2,18 @@ FROM rocker/r-base:latest
 
 LABEL maintainer "Wiktor Gustafsson <wiktor.gustafsson@sva.se>"
 
-# install dependenices
+# Install dependencies
 RUN R -e "install.packages(c('shiny', 'markdown'))"
 
-# copy the app to the image
-RUN mkdir /root/shinyTemplate
-COPY . /root/shinyTemplate
+# Copy the app to a temp directory on the image
+RUN mkdir /tmp/shinyTemplate
+COPY . /tmp/shinyTemplate
 
 # Install package
-RUN R CMD INSTALL /root/shinyTemplate
+RUN R CMD INSTALL /tmp/shinyTemplate
+
+## Clean up from R source install
+RUN rm -rf /tmp/*
 
 EXPOSE 3838
 
