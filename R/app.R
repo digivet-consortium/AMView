@@ -18,5 +18,5 @@ app <- function(...) {
 ##' @importFrom shiny runApp
 ##' @export
 run_app <- function(...) {
-    runApp(app())
+    runApp(app(...))
 }
