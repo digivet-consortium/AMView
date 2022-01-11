@@ -2,6 +2,7 @@
 ##'
 ##' Configure the UI (frontend) side of the Shiny app
 ##' @noRd
+##' @import markdown
 ##' @import shiny 
 ##' @import data.table
 ##' @import bslib
@@ -15,7 +16,7 @@ app_ui <- function() {
                tabPanel("Shiny app readme",
                         includeMarkdown(
                             system.file("README.md",
-                                        package = "shinyTemplate"))),
+                                        package = "shinyHerdsizeDash"))),
 
                tabPanel("Dashboard",
                         h1("Herdsize"),
