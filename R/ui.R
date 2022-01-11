@@ -2,9 +2,14 @@
 ##'
 ##' Configure the UI (frontend) side of the Shiny app
 ##' @noRd
-##' @import shiny
+##' @import shiny 
+##' @import data.table
+##' @import bslib
+
 app_ui <- function() {
-    navbarPage("Shiny Example",
+  test <- data.table(herdsize)
+    navbarPage("Herdsize dashboard",
+               theme = bs_theme(bootswatch = "flatly"),
 
 
                tabPanel("Shiny app readme",
@@ -12,27 +17,35 @@ app_ui <- function() {
                             system.file("README.md",
                                         package = "shinyTemplate"))),
 
-               tabPanel("Example app",
-                        h1("Hello Shiny!"),
+               tabPanel("Dashboard",
+                        h1("Herdsize"),
                         sidebarLayout(
 
                             # Sidebar panel for inputs ----
                             sidebarPanel(
-
-                                # Input: Slider for the number of bins ----
-                                sliderInput(inputId = "bins",
-                                            label = "Number of bins:",
-                                            min = 1,
-                                            max = 50,
-                                            value = 30)
-
+                              selectInput(
+                                "region",
+                                label = "Region",
+                                choices = unique(herdsize[,region]),
+                                selected = unique(herdsize[,region])[1]
+                              ),
+                              sliderInput(
+                                "time", 
+                                label="Select time span:",
+                                min = min(herdsize[,time]),
+                                max = max(herdsize[,time]),
+                                value = c(min(herdsize[,time]),max(herdsize[,time]))
+                              )
                             ),
 
                             # Main panel for displaying outputs ----
                             mainPanel(
 
-                                # Output: Histogram ----
-                                plotOutput(outputId = "distPlot")
+                                # Output: 
+                              tabsetPanel(
+                                tabPanel("Plot line", plotOutput("plot1")), 
+                                tabPanel("Table", tableOutput("table"))
+                              )
 
                             )
                         )))
