@@ -1,23 +1,15 @@
-FROM rocker/r-base:latest
+FROM rocker/r-bspm:testing
 
 LABEL maintainer "Wiktor Gustafsson <wiktor.gustafsson@sva.se>"
-
-# Install dependencies
-RUN Rscript -e "install.packages(c('shiny', 'markdown'))"
 
 # Copy the app to a temp directory on the image
 RUN mkdir /tmp/app
 COPY . /tmp/app
 
-# Install package
-RUN R CMD INSTALL /tmp/app
-
-## Clean up from R source install
-RUN rm -rf /tmp/*
-
-# copy in the Rprofile to define shiny ports
-COPY Rprofile.site /usr/lib/R/etc/
+RUN Rscript -e "remotes::install_local('/tmp/app')" \
+  && echo "local(options(shiny.port = 3838, shiny.host = '0.0.0.0'))" > /usr/lib/R/etc/Rprofile.site \
+  && rm -rf /tmp/*
 
 EXPOSE 3838
 
-CMD ["R", "-e", "shinyTemplate::run_app()"]
+CMD ["Rscript", "-e", "shinyTemplate::run_app()"]
