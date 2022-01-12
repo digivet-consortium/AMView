@@ -15,6 +15,9 @@ RUN R CMD INSTALL /tmp/shinyTemplate
 ## Clean up from R source install
 RUN rm -rf /tmp/*
 
+# copy in the Rprofile to define shiny ports
+COPY Rprofile.site /usr/lib/R/etc/
+
 EXPOSE 3838
 
 CMD ["R", "-e", "shinyTemplate::run_app()"]
