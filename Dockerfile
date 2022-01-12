@@ -6,11 +6,11 @@ LABEL maintainer "Wiktor Gustafsson <wiktor.gustafsson@sva.se>"
 RUN Rscript -e "install.packages(c('shiny', 'markdown'))"
 
 # Copy the app to a temp directory on the image
-RUN mkdir /tmp/shinyTemplate
-COPY . /tmp/shinyTemplate
+RUN mkdir /tmp/app
+COPY . /tmp/app
 
 # Install package
-RUN R CMD INSTALL /tmp/shinyTemplate
+RUN R CMD INSTALL /tmp/app
 
 ## Clean up from R source install
 RUN rm -rf /tmp/*
