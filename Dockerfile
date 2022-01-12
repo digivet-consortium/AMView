@@ -17,4 +17,4 @@ RUN rm -rf /tmp/*
 
 EXPOSE 3838
 
-CMD ["Rscript", "-e", "shinyTemplate::run_app()"]
+CMD ["R", "-e", "shinyTemplate::run_app()"]
