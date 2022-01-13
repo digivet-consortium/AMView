@@ -2,10 +2,6 @@
 
 export(app)
 export(run_app)
-import(bslib)
-import(data.table)
-import(gghighlight)
-import(ggplot2)
 import(markdown)
 import(shiny)
 importFrom(shiny,runApp)

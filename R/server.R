@@ -4,23 +4,15 @@
 ##' generates some random content using the shinipsum package.
 ##' @noRd
 ##' @import shiny
-##' @import ggplot2
-##' @import gghighlight
-##' 
 app_server <- function(input, output, session) {
-    output$plot1 <- renderPlot({
-        
-        ggplot(data=herdsize[region==input$region, 
-                             .(meanSize=mean(size)), by = time], 
-               aes(x=time, y=meanSize)) +
-            geom_line(color="#13598d", size=1) +
-            gghighlight(time>=input$time[1] & time <= input$time[2]) +
-            ggtitle(input$region) +
-            labs(x="Time", y="Mean herdsize")
+    output$distPlot <- renderPlot({
+
+        x    <- datasets::faithful$waiting
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+        graphics::hist(x, breaks = bins, col = "#75AADB", border = "white",
+             xlab = "Waiting time to next eruption (in mins)",
+             main = "Histogram of waiting times")
+
     })
-    
-    output$table <- renderTable(herdsize[region==input$region & 
-                                             time >= input$time[1] & 
-                                             time <= input$time[2], 
-                                         .(meanSize=mean(size)), by = time])
 }
