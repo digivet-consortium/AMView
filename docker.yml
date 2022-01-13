@@ -19,10 +19,15 @@ steps:
     fi
   displayName: 'Fetch remote Dockerfile if there is none in the repo'
 
+- bash: |
+    echo "##vso[task.setvariable variable=packageName;isOutput=true]$(grep -i ^package DESCRIPTION | cut -d : -d \  -f 2)"
+  name: "getPackage"
+  displayName: 'Get package name from DESCRIPTION file'
+
 - task: Docker@2
   inputs:
     containerRegistry: 'ACR'
-    repository: 'shinyTemplate'
+    repository: '$(packageName)'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
