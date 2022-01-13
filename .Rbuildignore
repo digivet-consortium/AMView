@@ -1,4 +1,4 @@
-^shinyTemplate\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
 Dockerfile
