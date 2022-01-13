@@ -1,0 +1,26 @@
+variables:
+  R_LIBS_SITE: '/usr/share/R/library'
+  R_LIBS_USER: '$(Agent.BuildDirectory)/R/library'
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - Dockerfile
+      - docker.yml
+    exclude:
+      - .
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: 'ACR'
+    repository: 'shinyTemplate'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'

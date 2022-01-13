@@ -3,3 +3,4 @@
 ^LICENSE\.md$
 Dockerfile
 Makefile
+^README.md$

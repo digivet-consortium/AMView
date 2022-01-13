@@ -1,16 +1,18 @@
-FROM rocker/r-base:latest
+FROM rocker/r-bspm:testing
 
 LABEL maintainer "Wiktor Gustafsson <wiktor.gustafsson@sva.se>"
 
-# basic shiny functionality
-RUN RSCRIPT -e "install.packages('shiny', repos='https://cloud.r-project.org/')"
+# Copy the app to a temp directory on the image
+RUN mkdir /tmp/app
+COPY . /tmp/app
 
-# copy the app to the image
-RUN mkdir /root/shinyTemplate
-COPY . /root/shinyTemplate
-
-RUN R CMD INSTALL /root/shinyTemplate
+RUN apt-get update \
+  && Rscript -e "remotes::install_local('/tmp/app')" \
+  && echo "local(options(shiny.port = 3838, shiny.host = '0.0.0.0'))" > /usr/lib/R/etc/Rprofile.site \
+  && echo "$(grep -i ^package /tmp/app/DESCRIPTION | cut -d : -d \  -f 2)::run_app()" > /root/app.R \
+  && rm -rf /tmp/* \
+  && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 3838
 
-CMD ["R", "-e", "shinyTemplate::run_app()"]
+CMD ["Rscript", "/root/app.R"]
