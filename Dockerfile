@@ -1,7 +1,5 @@
 FROM rocker/r-bspm:testing
 
-LABEL maintainer "Wiktor Gustafsson <wiktor.gustafsson@sva.se>"
-
 # Copy the app to a temp directory on the image
 RUN mkdir /tmp/app
 COPY . /tmp/app
