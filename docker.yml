@@ -6,12 +6,24 @@ trigger:
   branches:
     include:
       - master
-  batch: true
+  paths:
+    include:
+      - Dockerfile
+      - docker.yml
+    exclude:
+      - .
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+
+- bash: |
+    if ! [[ -f Dockerfile ]]; then
+      wget https://svastatichosting.z6.web.core.windows.net/shinyTemplate/Dockerfile
+    fi
+  displayName: 'Fetch remote Dockerfile if there is none in the repo'
+
 - task: Docker@2
   inputs:
     containerRegistry: 'ACR'
