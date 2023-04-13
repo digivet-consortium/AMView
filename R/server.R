@@ -1,9 +1,7 @@
-##' app_server
-##'
-##' Manage the server (backend) side of the shiny app. This example app just
-##' generates some random content using the shinipsum package.
-##' @noRd
-##' @import shiny
+#' app_server
+#'
+#' Manage the server (backend) side of the shiny app.
+#' @noRd
 app_server <- function(input, output, session) {
     output$distPlot <- renderPlot({
 

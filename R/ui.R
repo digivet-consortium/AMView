@@ -1,9 +1,8 @@
-##' app_ui
-##'
-##' Configure the UI (frontend) side of the Shiny app
-##' @noRd
-##' @import markdown
-##' @import shiny
+#' app_ui
+#'
+#' Configure the UI (frontend) side of the Shiny app
+#' @noRd
+#'
 app_ui <- function() {
     navbarPage("Shiny Example",
 
