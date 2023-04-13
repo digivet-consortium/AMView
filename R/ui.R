@@ -4,37 +4,46 @@
 #' @noRd
 #'
 app_ui <- function() {
-    navbarPage("Shiny Example",
+    strftime_url <-
+        "https://svastatichosting.z6.web.core.windows.net/js/strftime-min.js"
 
+    ## Dashboard UI setup
+    shiny::fluidPage(
+        shiny::tags$script(src = strftime_url),
 
-               tabPanel("Shiny app readme",
-                        includeMarkdown(
-                            system.file("README.md",
-                                        package = "shinyTemplate"))),
+        shiny::includeCSS(system.file("styles.css",
+                                      package = "AMView")),
 
-               tabPanel("Example app",
-                        h1("Hello Shiny!"),
-                        sidebarLayout(
+        shinydashboard::dashboardPage(
+            ## Header
+            shinydashboard::dashboardHeader(title = "AMView",
+                shiny::tags$li(
+                class = "dropdown",
+                shiny::tags$a(
+                    shiny::img(
+                    src = "https://www.sva.se/media/j5th5vl0/sva_logo.svg",
+                    width = "150",
+                    height = "50"),
+                    href = "https://www.sva.se"
+                )
+            )
+        ),
 
-                            # Sidebar panel for inputs ----
-                            sidebarPanel(
+        ## Sidebar menu
+        shinydashboard::dashboardSidebar(
+            shinydashboard::sidebarMenu(
+                shinydashboard::menuItem("Start", tabName = "start"))),
 
-                                # Input: Slider for the number of bins ----
-                                sliderInput(inputId = "bins",
-                                            label = "Number of bins:",
-                                            min = 1,
-                                            max = 50,
-                                            value = 30)
+        ## Content
+        shinydashboard::dashboardBody(
+            shinydashboard::tabItems(
+                tab_start(),
+            )
+        )
+    ))
+}
 
-                            ),
-
-                            # Main panel for displaying outputs ----
-                            mainPanel(
-
-                                # Output: Histogram ----
-                                plotOutput(outputId = "distPlot")
-
-                            )
-                        )))
-
+#' @noRd
+tab_start <- function() {
+    shinydashboard::tabItem("start")
 }

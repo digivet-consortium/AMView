@@ -7,7 +7,7 @@
 #' @include server.R
 #' @include ui.R
 app <- function(...) {
-    shinyApp(app_ui(), app_server, ...)
+    shiny::shinyApp(app_ui(), app_server, ...)
 }
 
 #' run_app
@@ -16,5 +16,5 @@ app <- function(...) {
 #' @param ... additional arguments
 #' @export
 run_app <- function(...) {
-    runApp(app(...))
+    shiny::runApp(app(...))
 }

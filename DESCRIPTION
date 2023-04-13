@@ -5,17 +5,18 @@ Authors@R:
     person("Wiktor", "Gustafsson", ,
     "wiktor.gustafsson@sva.se",
     role = c("aut", "cre"))
-Description: A package to clean AMU data and visualize it in an interactive
-             Shiny app.
+Description: A package to visualize AMU data in an interactive Shiny app.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Depends: R (>= 4.0.0)
 Imports:
     markdown,
-    shiny
+    shiny,
+    shinydashboard
 Collate:
+    'AMView-package.R'
     'ui.R'
     'server.R'
     'app.R'
