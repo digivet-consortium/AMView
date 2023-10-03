@@ -10,13 +10,17 @@ License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Depends: R (>= 4.0.0)
+Depends: R (>= 4.1)
 Imports:
+    data.table,
+    DT,
     markdown,
+    plotly,
     shiny,
-    shinydashboard
+    shinyWidgets
 Collate:
     'AMView-package.R'
+    'AM_data.R'
     'ui.R'
     'server.R'
     'app.R'
