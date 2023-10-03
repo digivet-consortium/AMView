@@ -65,10 +65,16 @@ am_variables <- function(varnames = "all") {
         AnimalType = c("Beef cattle", "Dairy cattle", "Other cattle"),
         ProductionType = c("Breeders", "Meat/Fattening", "Milk"),
         Gender = c("Male", "Female", "Unknown"),
-        AgeCategory = c("Calf", "Weaner", "Adult"),
-        TreatmentPurpose = c("Prophylactic", "Metaphylactic", "Therapeutic"),
+        AgeCategory = c("Calf", "Young stock", "Adult"),
+        TreatmentPurpose = c("Metaphylactic", "Treatment"),
         Indication = paste("Indication", 1:10),
-        Diagnosis = paste("Diagnosis", 1:10),
+        Diagnosis = c(
+            "Obstetrics and reproductive disorder",
+            "Lameness",
+            "Mastitis",
+            "Other infection",
+            "Other"
+        ),
         AdministrationMethod = c(
             "Injectable products", "Intramammary products", "Oral solutions",
             "Oral pastes", "Oral powders", "Premixes", "Tablets and similar",
