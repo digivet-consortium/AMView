@@ -22,6 +22,7 @@ app_ui <- function() {
         shiny::tabsetPanel(
             timeseries_panel(species, start_date, end_date),
             map_panel(),
+            about_panel(),
             id = "tabs"
         ),
 
@@ -46,6 +47,13 @@ timeseries_panel <- function(species, start_date, end_date) {
 map_panel <- function() {
     shiny::tabPanel(
         title = "Map"
+    )
+}
+
+#' @noRd
+about_panel <- function() {
+    shiny::tabPanel(
+        title = "About"
     )
 }
 
