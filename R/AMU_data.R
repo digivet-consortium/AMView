@@ -65,7 +65,7 @@ am_variables <- function(varnames = "all") {
         AnimalType = c("Beef cattle", "Dairy cattle", "Other cattle"),
         ProductionType = c("Breeders", "Meat/Fattening", "Milk"),
         Gender = c("Male", "Female", "Unknown"),
-        AgeCategory = c("Calf", "Young stock", "Adult"),
+        AgeCategory = c("<6 months", "6-24 months", ">24 months"),
         TreatmentPurpose = c("Metaphylactic", "Treatment"),
         Indication = paste("Indication", 1:10),
         Diagnosis = c(
@@ -152,9 +152,9 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
     product_index <- sample(seq_len(nrow(atc)), n_rows, TRUE)
     MedicalProductName <- rep(NA_character_, n_rows)
     MedicalProductCode <- atc$handelsvarakod[product_index]
-    ATCcode <- atc$atc_kod[product_index]
-    ActiveIngredient <- atc$substans[product_index]
-    ActiveIngredientMg <- sample(seq(20, 100, 10), n_rows, TRUE)
+    ATCcode <- atc$atc_code[product_index]
+    ActiveIngredient <- atc$substance[product_index]
+    ActiveSubstanceKg <- sample(seq(0.5, 10, 0.5), n_rows, TRUE)
 
     data <- data.frame(
         EntryID,

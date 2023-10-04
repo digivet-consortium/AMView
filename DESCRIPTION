@@ -19,8 +19,8 @@ Imports:
     shiny,
     shinyWidgets
 Collate:
+    'AMU_data.R'
     'AMView-package.R'
-    'AM_data.R'
     'ui.R'
     'server.R'
     'app.R'
