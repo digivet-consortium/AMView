@@ -8,10 +8,8 @@ app_ui <- function() {
     end_date <- max(amu$DateTransaction, na.rm = TRUE)
     species <- sort(unique(amu$AnimalType))
 
-    strftime_url <- paste0(
-        "https://raw.githubusercontent.com/",
-        "samsonjs/strftime/main/strftime-min.js"
-    )
+    strftime_url <-
+        "https://svastatichosting.z6.web.core.windows.net/js/strftime-min.js"
 
     # Dashboard UI setup
     shiny::fluidPage(
