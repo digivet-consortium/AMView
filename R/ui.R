@@ -15,7 +15,10 @@ app_ui <- function() {
 
     # Dashboard UI setup
     shiny::fluidPage(
-        shiny::tags$head(shiny::tags$script(src = strftime_url)),
+        shiny::tags$head(shiny::tags$script(
+            src = strftime_url,
+            type = "text/javascript"
+        )),
 
         # Header
         shiny::headerPanel(title = "AMView"),
