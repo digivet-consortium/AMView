@@ -16,11 +16,9 @@ Imports:
     DT,
     markdown,
     plotly,
-    rprojroot,
     shiny,
     shinyTime,
-    shinyWidgets,
-    withr
+    shinyWidgets
 Collate:
     'AMU_data.R'
     'AMView-package.R'
