@@ -76,8 +76,13 @@ app_server <- function(input, output, session) {
                 agg == "NUTS3", "year", "NUTS3"
             )
 
-            choice_names <- c("Animal type/species", choice_name, "Diagnosis")
-            choice_values <- c("AnimalType", choice_value, "Diagnosis")
+            choice_names <- c(
+                "Animal type/species", choice_name,
+                "Diagnosis", "Medication group"
+            )
+            choice_values <- c(
+                "AnimalType", choice_value, "Diagnosis", "subgroup_1"
+            )
 
             shiny::updateRadioButtons(
                 session = session,
@@ -85,7 +90,9 @@ app_server <- function(input, output, session) {
                 choiceNames = choice_names,
                 choiceValues = choice_values,
                 selected = ifelse(
-                    current_group %in% c("AnimalType", "Diagnosis"),
+                    current_group %in% c(
+                        "AnimalType", "Diagnosis", "subgroup_1"
+                    ),
                     current_group,
                     choice_value
                 )
@@ -95,7 +102,7 @@ app_server <- function(input, output, session) {
 
     filtered_data <- shiny::reactive({
         amu_data <- amu()
-        DateTreatment <- # nolint
+        DateTransaction <- # nolint
             AnimalType <- # nolint
             AnimalSpecies <- # nolint
             Gender <- # nolint
@@ -109,8 +116,8 @@ app_server <- function(input, output, session) {
         daterange <- input$timeslider
 
         amu_data <- amu_data[
-            DateTreatment >= daterange[1] &
-                DateTreatment <= daterange[2] &
+            DateTransaction >= daterange[1] &
+                DateTransaction <= daterange[2] &
                 AnimalType %in% filter_data(
                     all_species, input$filter_species) &
                 Gender %in% filter_data(
@@ -126,10 +133,10 @@ app_server <- function(input, output, session) {
             j = c("month", "year"),
             value = list(
                 factor(
-                    format(amu_data$DateTreatment, "%B"),
+                    format(amu_data$DateTransaction, "%B"),
                     levels = month.name
                 ),
-                as.factor(format(amu_data$DateTreatment, "%Y"))
+                as.factor(format(amu_data$DateTransaction, "%Y"))
             )
         )
 
@@ -160,7 +167,7 @@ app_server <- function(input, output, session) {
 
         data.table::setnames(amu_data, "V1", "N")
 
-        amu_data
+        amu_data[order(get(x_agg), get(group_agg))]
     })
 
     output$plot <- plotly::renderPlotly({
@@ -212,7 +219,7 @@ filter_data <- function(data, selection) {
 agg_x <- function(agg) {
     switch(
         agg,
-        "date" = "DateTreatment",
+        "date" = "DateTransaction",
         "month" = "yearmonth",
         "year" = "year",
         "NUTS3" = "NUTS3"

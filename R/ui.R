@@ -4,16 +4,18 @@
 #' @noRd
 app_ui <- function() {
     amu <- get_amu()
-    start_date <- min(amu$DateTreatment, na.rm = TRUE)
-    end_date <- max(amu$DateTreatment, na.rm = TRUE)
+    start_date <- min(amu$DateTransaction, na.rm = TRUE)
+    end_date <- max(amu$DateTransaction, na.rm = TRUE)
     species <- sort(unique(amu$AnimalType))
 
-    strftime_url <-
-        "https://svastatichosting.z6.web.core.windows.net/js/strftime-min.js"
+    strftime_url <- paste0(
+        "https://raw.githubusercontent.com/",
+        "samsonjs/strftime/main/strftime-min.js"
+    )
 
     # Dashboard UI setup
     shiny::fluidPage(
-        shiny::tags$script(src = strftime_url),
+        shiny::tags$head(shiny::tags$script(src = strftime_url)),
 
         # Header
         shiny::headerPanel(title = "AMView"),
@@ -63,24 +65,39 @@ timeseries_filters <- function(species) {
     shiny::wellPanel(
         shiny::fluidRow(
             shiny::column(
-                shiny::h3("Group & aggregate"),
-                shiny::radioButtons(
-                    inputId = "agg_x",
-                    label = "X axis unit",
-                    choiceNames = c("Year", "Month", "Date", "Region (NUTS3)"),
-                    choiceValues = c("year", "month", "date", "NUTS3"),
-                    selected = "month",
-                ),
-                shiny::radioButtons(
-                    inputId = "agg_group",
-                    label = "Group by",
-                    choiceNames = c(
-                        "Animal type/species",
-                        "Region (NUTS3)",
-                        "Diagnosis"
+                shiny::fluidRow(
+                    shiny::h3("Group & aggregate"),
+                    shiny::column(
+                        shiny::h5("X axis unit"),
+                        shiny::radioButtons(
+                            inputId = "agg_x",
+                            label = NULL,
+                            choiceNames = c(
+                                "Year", "Month", "Date", "Region (NUTS3)"
+                            ),
+                            choiceValues = c("year", "month", "date", "NUTS3"),
+                            selected = "month",
+                        ),
+                        width = 6
                     ),
-                    choiceValues = c("AnimalType", "NUTS3", "Diagnosis"),
-                    selected = "NUTS3"
+                    shiny::column(
+                        shiny::h5("Group by"),
+                        shiny::radioButtons(
+                            inputId = "agg_group",
+                            label = NULL,
+                            choiceNames = c(
+                                "Animal type/species",
+                                "Region (NUTS3)",
+                                "Diagnosis",
+                                "Medication group"
+                            ),
+                            choiceValues = c(
+                                "AnimalType", "NUTS3", "Diagnosis", "subgroup_1"
+                            ),
+                            selected = "NUTS3"
+                        ),
+                        width = 6
+                    )
                 ),
                 width = 6
             ),
