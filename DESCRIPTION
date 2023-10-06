@@ -17,6 +17,7 @@ Imports:
     markdown,
     plotly,
     shiny,
+    shinyTime,
     shinyWidgets
 Collate:
     'AMU_data.R'
