@@ -41,8 +41,6 @@ app_ui <- function() {
     end_date <- max(amu$DateTransaction, na.rm = TRUE)
     species <- sort(unique(amu$AnimalType))
 
-    library(shinyTime)
-
     # strftime_url <-
     #     "https://svastatichosting.z6.web.core.windows.net/js/strftime-min.js"
 
