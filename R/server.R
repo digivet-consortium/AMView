@@ -63,6 +63,36 @@ app_server <- function(input, output, session) {
         ignoreNULL = FALSE
     )
 
+    shiny::observeEvent(
+        input$agg_x,
+        {
+            agg <- input$agg_x
+            current_group <- input$agg_group
+
+            choice_name <- ifelse(
+                agg == "NUTS3", "Year", "Region (NUTS3)"
+            )
+            choice_value <- ifelse(
+                agg == "NUTS3", "year", "NUTS3"
+            )
+
+            choice_names <- c("Animal type/species", choice_name, "Diagnosis")
+            choice_values <- c("AnimalType", choice_value, "Diagnosis")
+
+            shiny::updateRadioButtons(
+                session = session,
+                inputId = "agg_group",
+                choiceNames = choice_names,
+                choiceValues = choice_values,
+                selected = ifelse(
+                    current_group %in% c("AnimalType", "Diagnosis"),
+                    current_group,
+                    choice_value
+                )
+            )
+        }
+    )
+
     filtered_data <- shiny::reactive({
         amu_data <- amu()
         DateTreatment <- # nolint
@@ -121,28 +151,43 @@ app_server <- function(input, output, session) {
             )
         )
 
-        time_agg <- agg_time(input$agg_time)
+        x_agg <- agg_x(input$agg_x)
         group_agg <- input$agg_group
         amu_data <- amu_data[
-            , sum(ActiveSubstanceKg), by = c(time_agg, group_agg)
+            , sum(ActiveSubstanceKg), by = c(x_agg, group_agg)
         ]
         print(str(amu_data))
+
+        data.table::setnames(amu_data, "V1", "N")
 
         amu_data
     })
 
     output$plot <- plotly::renderPlotly({
-        time_x <- agg_time(input$agg_time) # nolint
+        x <- agg_x(input$agg_x) # nolint
+
+        chart_type <- input$chart_type
+
+        if (chart_type == "bar") {
+            type <- "bar"
+            mode <- NULL
+        } else if (chart_type == "lines") {
+            type <- "scatter"
+            mode <- "lines"
+        } else {
+            stop("This shouldn't happen")
+        }
 
         plotly::plot_ly(
             data = filtered_data(),
-            x = ~get(time_x),
-            y = ~V1,
-            type = "bar",
+            x = ~get(x),
+            y = ~N,
+            type = type,
+            mode = mode,
             color = ~get(input$agg_group)
         ) |>
             plotly::layout(
-                xaxis = list(title = time_x),
+                xaxis = list(title = x),
                 yaxis = list(title = "Substance consumed (kg)"),
                 legend = list(title = list(text = input$agg_group))
             )
@@ -164,11 +209,12 @@ filter_data <- function(data, selection) {
 }
 
 #' @noRd
-agg_time <- function(agg) {
+agg_x <- function(agg) {
     switch(
         agg,
         "date" = "DateTreatment",
         "month" = "yearmonth",
-        "year" = "year"
+        "year" = "year",
+        "NUTS3" = "NUTS3"
     )
 }
