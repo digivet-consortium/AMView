@@ -21,6 +21,7 @@ Imports:
     markdown,
     plotly,
     RColorBrewer,
+    sf,
     shiny,
     shinyWidgets
 Collate:
