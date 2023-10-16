@@ -7,6 +7,8 @@ app_ui <- function() {
     start_date <- min(amu$DateTransaction, na.rm = TRUE)
     end_date <- max(amu$DateTransaction, na.rm = TRUE)
     species <- sort(unique(amu$AnimalType))
+    atc <- get_atc()
+    groups <- sort(unique(atc$subgroup_1))
 
     strftime_url <-
         "https://svastatichosting.z6.web.core.windows.net/js/strftime-min.js"
@@ -23,8 +25,8 @@ app_ui <- function() {
 
         # Body
         shiny::tabsetPanel(
-            timeseries_panel(species, start_date, end_date),
-            map_panel(),
+            timeseries_panel(species, groups, start_date, end_date),
+            map_panel(species, groups, start_date, end_date),
             about_panel(),
             id = "tabs"
         ),
@@ -34,19 +36,107 @@ app_ui <- function() {
 }
 
 #' @noRd
-timeseries_panel <- function(species, start_date, end_date) {
+timeseries_panel <- function(species, groups, start_date, end_date) {
     shiny::tabPanel(
-        shiny::fluidRow(
-            timeseries_output(start_date, end_date)
+        list(
+            timeseries_output(start_date, end_date),
+            timeseries_filters(species, groups)
         ),
-        timeseries_filters(species),
         title = "Trends"
     )
 }
 
 #' @noRd
-map_panel <- function() {
+map_panel <- function(species, groups, start_date, end_date) {
     shiny::tabPanel(
+        shiny::br(),
+        shiny::sidebarLayout(
+            sidebarPanel = shiny::sidebarPanel(
+                shiny::h3("Filter"),
+                shinyWidgets::pickerInput(
+                    inputId = "map_filter_species",
+                    label = "Animal types",
+                    multiple = TRUE,
+                    choices = species,
+                    options = shinyWidgets::pickerOptions(
+                        actionsBox = TRUE
+                    ),
+                    inline = FALSE
+                ),
+                shinyWidgets::pickerInput(
+                    inputId = "map_filter_gender",
+                    label = "Genders",
+                    multiple = TRUE,
+                    choices = NULL,
+                    options = shinyWidgets::pickerOptions(
+                        actionsBox = TRUE
+                    ),
+                    inline = FALSE
+                ),
+                shinyWidgets::pickerInput(
+                    inputId = "map_filter_age",
+                    label = "Age categories",
+                    multiple = TRUE,
+                    choices = NULL,
+                    options = shinyWidgets::pickerOptions(
+                        actionsBox = TRUE
+                    ),
+                    inline = FALSE
+                ),
+                shinyWidgets::pickerInput(
+                    inputId = "map_filter_medication",
+                    label = "Medication groups",
+                    multiple = TRUE,
+                    choices = groups,
+                    options = shinyWidgets::pickerOptions(
+                        actionsBox = TRUE
+                    ),
+                    inline = FALSE
+                ),
+                width = 2
+            ),
+            mainPanel = shiny::mainPanel(
+                shiny::fluidRow(
+                    shiny::column(
+                        shiny::fluidRow(
+                            leaflet::leafletOutput(
+                                outputId = "map", height = "75vh", width = "95%"
+                            )
+                        ),
+                        shiny::fluidRow(
+                            shiny::column(
+                                shiny::sliderInput(
+                                    inputId = "map_slider",
+                                    label = "Date range",
+                                    min = start_date,
+                                    max = end_date,
+                                    value = c(start_date, end_date),
+                                    width = "100%"
+                                ),
+                                width = 10, offset = 1
+                            ),
+                        ),
+                        width = 7
+                    ),
+                    shiny::column(
+                        shiny::div(
+                            shiny::uiOutput(outputId = "selected_region")
+                        ),
+                        shiny::fluidRow(shiny::plotOutput(
+                            outputId = "pie_species", height = "25vh"
+                        )),
+                        shiny::fluidRow(shiny::plotOutput(
+                            outputId = "pie_diagnosis", height = "25vh"
+                        )),
+                        shiny::fluidRow(shiny::plotOutput(
+                            outputId = "pie_medication", height = "30vh"
+                        )),
+                        width = 5
+                    )
+                ),
+                width = 10
+            )
+        ),
         title = "Map"
     )
 }
@@ -55,147 +145,5 @@ map_panel <- function() {
 about_panel <- function() {
     shiny::tabPanel(
         title = "About"
-    )
-}
-
-#' @noRd
-timeseries_filters <- function(species) {
-    atc <- get_atc()
-    groups <- sort(unique(atc$subgroup_1))
-
-    shiny::wellPanel(
-        shiny::fluidRow(
-            shiny::column(
-                shiny::fluidRow(
-                    shiny::h3("Group & aggregate"),
-                    shiny::column(
-                        shiny::h5("X axis unit"),
-                        shiny::radioButtons(
-                            inputId = "agg_x",
-                            label = NULL,
-                            choiceNames = c(
-                                "Year", "Month", "Date", "Region (NUTS3)"
-                            ),
-                            choiceValues = c("year", "month", "date", "NUTS3"),
-                            selected = "month",
-                        ),
-                        width = 6
-                    ),
-                    shiny::column(
-                        shiny::h5("Group by"),
-                        shiny::radioButtons(
-                            inputId = "agg_group",
-                            label = NULL,
-                            choiceNames = c(
-                                "Animal type/species",
-                                "Region (NUTS3)",
-                                "Diagnosis",
-                                "Medication group"
-                            ),
-                            choiceValues = c(
-                                "AnimalType", "NUTS3", "Diagnosis", "subgroup_1"
-                            ),
-                            selected = "NUTS3"
-                        ),
-                        width = 6
-                    )
-                ),
-                width = 6
-            ),
-            shiny::column(
-                shiny::p(
-                    shiny::h3("Filter"),
-                    shinyWidgets::pickerInput(
-                        inputId = "filter_species",
-                        label = "Animal type",
-                        multiple = TRUE,
-                        choices = species,
-                        options = shinyWidgets::pickerOptions(
-                            actionsBox = TRUE
-                        ),
-                        inline = TRUE
-                    ),
-                    shinyWidgets::pickerInput(
-                        inputId = "filter_gender",
-                        label = "Gender",
-                        multiple = TRUE,
-                        choices = NULL,
-                        options = shinyWidgets::pickerOptions(
-                            actionsBox = TRUE
-                        ),
-                        inline = TRUE
-                    ),
-                    shinyWidgets::pickerInput(
-                        inputId = "filter_age",
-                        label = "Age categories",
-                        multiple = TRUE,
-                        choices = NULL,
-                        options = shinyWidgets::pickerOptions(
-                            actionsBox = TRUE
-                        ),
-                        inline = TRUE
-                    )
-                ),
-                shiny::p(
-                    shiny::h5("Medication filters"),
-                    shiny::p(
-                        shinyWidgets::pickerInput(
-                            inputId = "filter_medication_group",
-                            label = "Groups",
-                            multiple = TRUE,
-                            choices = groups,
-                            options = shinyWidgets::pickerOptions(
-                                actionsBox = TRUE
-                            ),
-                            inline = TRUE
-                        ),
-                        shinyWidgets::pickerInput(
-                            inputId = "filter_medication_subgroup",
-                            label = "Subgroups",
-                            multiple = TRUE,
-                            choices = NULL,
-                            options = shinyWidgets::pickerOptions(
-                                actionsBox = TRUE
-                            ),
-                            inline = TRUE
-                        )
-                    )
-                ),
-                width = 6
-            )
-        )
-    )
-}
-
-timeseries_output <- function(start_date, end_date) {
-    list(
-        shiny::fluidRow(
-            plotly::plotlyOutput(outputId = "plot")
-        ),
-        shiny::fluidRow(
-            shiny::column(
-                shiny::sliderInput(
-                    inputId = "timeslider",
-                    label = "Date range",
-                    min = start_date,
-                    max = end_date,
-                    value = c(start_date, end_date),
-                    width = "100%"
-                ),
-                width = 9, offset = 1
-            ),
-            shiny::column(
-                shiny::radioButtons(
-                    inputId = "chart_type",
-                    label = "Chart type",
-                    choiceValues = c("bar", "lines"),
-                    choiceNames = c("Bar chart", "Line chart"),
-                    inline = TRUE,
-                    width = "100%",
-                    selected = "bar"
-                ),
-                width = 1, offset = 1
-            )
-        )
     )
 }

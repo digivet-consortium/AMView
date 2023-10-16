@@ -195,3 +195,16 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
 
     data
 }
+
+#' @noRd
+get_spatial_data <- function(country_codes) {
+    countries <- eurostat::get_eurostat_geospatial(
+        output_class = "sf",
+        nuts_level = "3",
+        make_valid = FALSE
+    )
+
+    stopifnot(all(country_codes %in% countries$CNTR_CODE))
+
+    countries[countries$CNTR_CODE %in% country_codes, ]
+}

@@ -14,13 +14,19 @@ Depends: R (>= 4.1)
 Imports:
     data.table,
     DT,
+    eurostat,
+    graphics,
+    htmltools,
+    leaflet,
     markdown,
     plotly,
+    RColorBrewer,
     shiny,
     shinyWidgets
 Collate:
-    'AMU_data.R'
     'AMView-package.R'
     'ui.R'
     'server.R'
     'app.R'
+    'data.R'
+    'timeseries-ui.R'
