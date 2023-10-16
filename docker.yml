@@ -15,7 +15,7 @@ steps:
 
 - bash: |
     if ! [[ -f Dockerfile-fedora-latest ]]; then
-      wget https://svastatichosting.z6.web.core.windows.net/shinyTemplate/shiny_dockerfile_fedora/Dockerfile-fedora-latest
+      wget https://svastatichosting.z6.web.core.windows.net/shinyTemplate/Dockerfile
     fi
   displayName: 'Fetch remote Dockerfile if there is none in the repo'
 
@@ -30,5 +30,5 @@ steps:
     containerRegistry: 'ACR'
     repository: $(getPackage.packageName)
     command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile-fedora-latest'
+    Dockerfile: '**/Dockerfile'
     tags: 'latest'
