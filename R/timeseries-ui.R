@@ -4,6 +4,34 @@ timeseries_filters <- function(species, groups) {
         shiny::fluidRow(
             shiny::column(
                 shiny::fluidRow(
+                    shiny::column(
+                        shiny::actionButton(
+                            inputId = "help_timeseries",
+                            label = "About this page",
+                            icon = shiny::icon("circle-info")
+                        ),
+                        width = 3,
+                    ),
+                    shiny::column(
+                        shinyscreenshot::screenshotButton(
+                            filename = "AMView_trendplot",
+                            id = "plot",
+                            icon = shiny::icon("image"),
+                            label = "Save plot as PNG"
+                        ),
+                        width = 3, offset = 1
+                    ),
+                    shiny::column(
+                        shiny::downloadButton(
+                            outputId = "download_timeseries",
+                            label = "Download current data selection",
+                            icon = shiny::icon("file-csv")
+                        ),
+                        width = 4, offset = 1
+                    )
+                ),
+                shiny::br(), shiny::br(),
+                shiny::fluidRow(
                     shiny::h3("Group & aggregate"),
                     shiny::column(
                         shiny::h5("X axis unit"),
@@ -102,9 +130,14 @@ timeseries_filters <- function(species, groups) {
 }
 
 timeseries_output <- function(start_date, end_date) {
-    list(
+    shiny::tagList(
         shiny::fluidRow(
-            plotly::plotlyOutput(outputId = "plot")
+            shiny::column(
+                shinycssloaders::withSpinner(
+                    plotly::plotlyOutput(outputId = "plot"), hide.ui = FALSE
+                ),
+                width = 12
+            )
         ),
         shiny::fluidRow(
             shiny::column(

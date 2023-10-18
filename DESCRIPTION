@@ -23,6 +23,8 @@ Imports:
     RColorBrewer,
     sf,
     shiny,
+    shinycssloaders,
+    shinyscreenshot,
     shinyWidgets
 Collate:
     'AMView-package.R'

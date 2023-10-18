@@ -199,6 +199,8 @@ app_server <- function(input, output, session) {
 
         data.table::setnames(amu_data, "V1", "N")
 
+        selected_area(NULL)
+
         amu_data[order(get(x_agg), get(group_agg))]
     })
 
@@ -236,54 +238,36 @@ app_server <- function(input, output, session) {
     })
 
     map_data <- shiny::reactive({
-        amu_data <- amu()
+        selected_area(NULL)
+        create_map_data(
+            amu_data = amu(),
+            daterange = as.Date(input$map_slider),
+            filter_species = input$map_filter_species,
+            filter_gender = input$map_filter_gender,
+            filter_age = input$map_filter_age,
+            filter_medication = input$map_filter_medication,
+            geo_group = TRUE
+        )
+    })
 
-        all_species <- amu_data$AnimalType
-        all_genders <- amu_data$Gender
-        all_ages <- amu_data$AgeCategory
-        all_groups <- amu_data$subgroup_1
-
-        countries <- unique(amu_data$Country)
-        countries <- get_spatial_data(countries)
-
-        daterange <- as.Date(input$map_slider)
-
-        DateTransaction <- AnimalType <- #nolint
-            AnimalGender <- AgeCategory <- subgroup_1 <- NULL #nolint
-
-        .N <- NULL #nolint
-        sums <- amu_data[
-            DateTransaction >= daterange[1] &
-                DateTransaction <= daterange[2] &
-                AnimalType %in% filter_data(
-                    all_species, input$map_filter_species
-                ) &
-                Gender %in% filter_data(
-                    all_genders, input$map_filter_gender
-                ) &
-                AgeCategory %in% filter_data(
-                    all_ages, input$map_filter_age
-                ) &
-                subgroup_1 %in% filter_data(
-                    all_groups, input$map_filter_medication
-                ),
-            sum(ActiveSubstanceKg),
-            by = "NUTS3"
-        ]
-
-        stopifnot(all(sums$NUTS3 %in% countries$NUTS_ID))
-
-        countries[match(sums$NUTS3, countries$NUTS_ID), "N"] <- sums$V1
-
-        print(names(sums))
-        print(nrow(sums))
-
-        countries
+    pie_data <- shiny::reactive({
+        selected_area(NULL)
+        create_map_data(
+            amu_data = amu(),
+            daterange = as.Date(input$map_slider),
+            filter_species = input$map_filter_species,
+            filter_gender = input$map_filter_gender,
+            filter_age = input$map_filter_age,
+            filter_medication = input$map_filter_medication,
+            geo_group = FALSE
+        )
     })
 
     shiny::observeEvent(input$map_shape_click, {
-        if (is.null(input$map_shape_click))
+        if (is.null(input$map_shape_click)) {
+            selected_area(NULL)
             return()
+        }
 
         prev_selected <- selected_area()
         new_selected <- input$map_shape_click$id
@@ -306,7 +290,21 @@ app_server <- function(input, output, session) {
             )
             selected_area(new_selected)
         }
-    })
+    }, ignoreNULL = FALSE)
+
+    output$download_timeseries <- shiny::downloadHandler(
+        filename = "AMView_trend_data.csv",
+        content = function(f) {
+            write.csv(x = timeseries_data(), file = f, row.names = FALSE)
+        }
+    )
+
+    output$download_map <- shiny::downloadHandler(
+        filename = "AMView_map_data.csv",
+        content = function(f) {
+            write.csv(x = map_data(), file = f, row.names = FALSE)
+        }
+    )
 
     output$map <- leaflet::renderLeaflet({
         m_d <- map_data()
@@ -331,8 +329,9 @@ app_server <- function(input, output, session) {
             )
     })
 
-    output$pie_species <- shiny::renderPlot({
-        dt <- amu()
+    output$pie_species <- plotly::renderPlotly({
+        dt <- data.table::setDT(pie_data())
+
         region <- selected_area()
 
         NUTS3 <- NULL #nolint
@@ -340,17 +339,17 @@ app_server <- function(input, output, session) {
         if (!is.null(region))
             dt <- dt[NUTS3 == region]
 
-        dt <- dt[, sum(ActiveSubstanceKg), by = "AnimalType"]
-
-        render_pie(
-            counts = dt$V1,
-            labels = dt$AnimalType,
+        summary_pie(
+            data = dt,
+            count_var = "ActiveSubstanceKg",
+            group_var = "AnimalType",
             title = "Substance consumed (kg) per animal type/species"
         )
     })
 
-    output$pie_diagnosis <- shiny::renderPlot({
-        dt <- amu()
+    output$pie_diagnosis <- plotly::renderPlotly({
+        dt <- data.table::setDT(pie_data())
+
         region <- selected_area()
 
         NUTS3 <- NULL #nolint
@@ -358,17 +357,17 @@ app_server <- function(input, output, session) {
         if (!is.null(region))
             dt <- dt[NUTS3 == region]
 
-        dt <- dt[, sum(ActiveSubstanceKg), by = "Diagnosis"]
-
-        render_pie(
-            counts = dt$V1,
-            labels = dt$Diagnosis,
+        summary_pie(
+            data = dt,
+            count_var = "ActiveSubstanceKg",
+            group_var = "Diagnosis",
             title = "Substance consumed (kg) per diagnosis"
         )
     })
 
-    output$pie_medication <- shiny::renderPlot({
-        dt <- amu()
+    output$pie_medication <- plotly::renderPlotly({
+        dt <- data.table::setDT(pie_data())
+
         region <- selected_area()
 
         NUTS3 <- NULL #nolint
@@ -376,17 +375,17 @@ app_server <- function(input, output, session) {
         if (!is.null(region))
             dt <- dt[NUTS3 == region]
 
-        dt <- dt[, sum(ActiveSubstanceKg), by = "subgroup_1"]
-
-        render_pie(
-            counts = dt$V1,
-            labels = dt$subgroup_1,
-            title = "Substance consumed (kg) per medication"
+        summary_pie(
+            data = dt,
+            count_var = "ActiveSubstanceKg",
+            group_var = "subgroup_1",
+            title = "Substance consumed (kg) per medication group"
         )
     })
 
     output$selected_region <- shiny::renderUI({
         region <- selected_area()
+        print(region)
 
         if (is.null(region)) {
             region <- "All regions"
@@ -395,7 +394,7 @@ app_server <- function(input, output, session) {
             region <- m_d[m_d$NUTS_ID == region, ]$NAME_LATN
         }
 
-        shiny::h3(region)
+        shiny::h4(paste0("Selected: ", region))
     })
 }
 
@@ -425,16 +424,71 @@ agg_x <- function(agg) {
 }
 
 #' @noRd
-render_pie <- function(counts, labels, title) {
+create_map_data <- function(
+    amu_data,
+    daterange,
+    filter_species,
+    filter_gender,
+    filter_age,
+    filter_medication,
+    geo_group = TRUE
+) {
+    all_species <- amu_data$AnimalType
+    all_genders <- amu_data$Gender
+    all_ages <- amu_data$AgeCategory
+    all_groups <- amu_data$subgroup_1
+
+    countries <- unique(amu_data$Country)
+    countries <- get_spatial_data(countries)
+
+    DateTransaction <- AnimalType <- Gender <- #nolint
+    AgeCategory <- subgroup_1 <- ActiveSubstanceKg <- NULL #nolint
+    dt <- amu_data[
+        DateTransaction >= daterange[1] &
+            DateTransaction <= daterange[2] &
+            AnimalType %in% filter_data(
+                all_species, filter_species
+            ) &
+            Gender %in% filter_data(
+                all_genders, filter_gender
+            ) &
+            AgeCategory %in% filter_data(
+                all_ages, filter_age
+            ) &
+            subgroup_1 %in% filter_data(
+                all_groups, filter_medication
+            )
+    ]
+
+    if (isFALSE(geo_group))
+        return(dt)
+
+    sums <- dt[, sum(ActiveSubstanceKg), by = "NUTS3"]
+
+    stopifnot(all(sums$NUTS3 %in% countries$NUTS_ID))
+
+    countries[match(sums$NUTS3, countries$NUTS_ID), "N"] <- sums$V1
+
+    return(countries)
+}
+
+#' @noRd
+summary_pie <- function(data, count_var, group_var, title) {
     stopifnot(
-        length(counts) == length(labels),
-        is.numeric(counts),
-        is.character(labels)
+        data.table::is.data.table(data),
+        count_var %in% colnames(data),
+        group_var %in% colnames(data),
+        is.character(title)
     )
-    graphics::pie(
-        x = counts,
-        labels = labels,
-        main = title,
-        col = RColorBrewer::brewer.pal(n = length(counts), name = "Paired")
-    )
+
+    data <- data[, sum(get(count_var)), by = group_var]
+
+    plotly::plot_ly(
+        data = data,
+        labels = ~get(group_var),
+        values = ~V1,
+        type = "pie",
+        textinfo = "none",
+        colors = "YlOrRd"
+    ) |> plotly::layout(title = title, showlegend = TRUE)
 }
