@@ -1,0 +1,106 @@
+atc_code;handelsvarakod;subgroup_1;subgroup_2;substance
+QJ01AA02;8117;Tetracyclines;Tetracyclines;Doxycycline
+QJ01AA02;8118;Tetracyclines;Tetracyclines;Doxycycline
+QJ01AA02;8119;Tetracyclines;Tetracyclines;Doxycycline
+QJ01AA02;PUL90;Tetracyclines;Tetracyclines;Doxycycline
+QJ01AA02;HID50;Tetracyclines;Tetracyclines;Doxycycline
+QJ01AA02;DOY90;Tetracyclines;Tetracyclines;Doxycycline
+QJ01AA06;VET00;Tetracyclines;Tetracyclines;Oxytetracycline
+QJ01AA06;TER50;Tetracyclines;Tetracyclines;Oxytetracycline
+QJ01AA06;ENG00;Tetracyclines;Tetracyclines;Oxytetracycline
+QJ01AA06;TET00;Tetracyclines;Tetracyclines;Oxytetracycline
+QJ01BA90;FLO00;Amphenicols;Amphenicols;Florfenicol
+QJ01BA99;;Amphenicols;Amphenicols;Amphenicols, combinations
+QJ01CA01;AMP20;Beta-lactam antibacterials, penicillins;Penicillins with extended spectrum;Ampicillin
+QJ01CA04;7931;Beta-lactam antibacterials, penicillins;Penicillins with extended spectrum;Amoxicillin
+QJ01CA04;7932;Beta-lactam antibacterials, penicillins;Penicillins with extended spectrum;Amoxicillin
+QJ01CA04;7933;Beta-lactam antibacterials, penicillins;Penicillins with extended spectrum;Amoxicillin
+QJ01CA04;7934;Beta-lactam antibacterials, penicillins;Penicillins with extended spectrum;Amoxicillin
+QJ01CA04;7935;Beta-lactam antibacterials, penicillins;Penicillins with extended spectrum;Amoxicillin
+QJ01CA04;BYL00;Beta-lactam antibacterials, penicillins;Penicillins with extended spectrum;Amoxicillin
+QJ01CA04;MAX50;Beta-lactam antibacterials, penicillins;Penicillins with extended spectrum;Amoxicillin
+QJ01CE01;GEE91;Beta-lactam antibacterials, penicillins;Beta-lactamase sensitive penicillins;Benzylpenicillin
+QJ01CE01;GEE90;Beta-lactam antibacterials, penicillins;Beta-lactamase sensitive penicillins;Benzylpenicillin
+QJ01CE02;5947;Beta-lactam antibacterials, penicillins;Beta-lactamase sensitive penicillins;Phenoxymethylpenicillin
+QJ01CE02;5948;Beta-lactam antibacterials, penicillins;Beta-lactamase sensitive penicillins;Phenoxymethylpenicillin
+QJ01CE02;5949;Beta-lactam antibacterials, penicillins;Beta-lactamase sensitive penicillins;Phenoxymethylpenicillin
+QJ01CE02;5950;Beta-lactam antibacterials, penicillins;Beta-lactamase sensitive penicillins;Phenoxymethylpenicillin
+QJ01CE09;PEN00;Beta-lactam antibacterials, penicillins;Beta-lactamase sensitive penicillins;Bensylpenicillinprokain
+QJ01CE09;ETH00;Beta-lactam antibacterials, penicillins;Beta-lactamase sensitive penicillins;Bensylpenicillinprokain
+QJ01CE09;PRC00;Beta-lactam antibacterials, penicillins;Beta-lactamase sensitive penicillins;Bensylpenicillinprokain
+QJ01CE09;UPA00;Beta-lactam antibacterials, penicillins;Beta-lactamase sensitive penicillins;Bensylpenicillinprokain
+QJ01CE90;JUA00;Beta-lactam antibacterials, penicillins;Beta-lactamase sensitive penicillins;Penetamathydrojodid
+QJ01CR02;6755;Beta-lactam antibacterials, penicillins;Combinations of penicillins, incl. beta-lactamase inhibitors;Amoxicillin and enzyme inhibitors
+QJ01CR02;6756;Beta-lactam antibacterials, penicillins;Combinations of penicillins, incl. beta-lactamase inhibitors;Amoxicillin and enzyme inhibitors
+QJ01CR02;6757;Beta-lactam antibacterials, penicillins;Combinations of penicillins, incl. beta-lactamase inhibitors;Amoxicillin and enzyme inhibitors
+QJ01CR02;6758;Beta-lactam antibacterials, penicillins;Combinations of penicillins, incl. beta-lactamase inhibitors;Amoxicillin and enzyme inhibitors
+QJ01CR02;6759;Beta-lactam antibacterials, penicillins;Combinations of penicillins, incl. beta-lactamase inhibitors;Amoxicillin and enzyme inhibitors
+QJ01CR02;SYN00;Beta-lactam antibacterials, penicillins;Combinations of penicillins, incl. beta-lactamase inhibitors;Amoxicillin and enzyme inhibitors
+QJ01DA01;8668;Other beta-lactam antibacterials;Cephalosporins and similar antibacterials;Cefalexin
+QJ01DA01;8669;Other beta-lactam antibacterials;Cephalosporins and similar antibacterials;Cefalexin
+QJ01DA01;8670;Other beta-lactam antibacterials;Cephalosporins and similar antibacterials;Cefalexin
+QJ01DB05;3128;Other beta-lactam antibacterials;First-generation cephalosporins;Cefadroxil
+QJ01DB05;3129;Other beta-lactam antibacterials;First-generation cephalosporins;Cefadroxil
+QJ01DD90;EXE00;Other beta-lactam antibacterials;Third-generation cephalosporins;Ceftiofur
+QJ01DD90;EXE01;Other beta-lactam antibacterials;Third-generation cephalosporins;Ceftiofur
+QJ01DD90;NAX01;Other beta-lactam antibacterials;Third-generation cephalosporins;Ceftiofur
+QJ01DD90;CEF50;Other beta-lactam antibacterials;Third-generation cephalosporins;Ceftiofur
+QJ01DD90;NAX02;Other beta-lactam antibacterials;Third-generation cephalosporins;Ceftiofur
+QJ01DD90;CET00;Other beta-lactam antibacterials;Third-generation cephalosporins;Ceftiofur
+QJ01DD91;;Other beta-lactam antibacterials;Third-generation cephalosporins;Cefovecin
+QJ01EW10;HIP40;Sulfonamides and trimethoprim;Combinations of sulfonamides and trimethoprim, incl. derivatives;Sulfadiazine and trimethoprim
+QJ01EW10;HIP00;Sulfonamides and trimethoprim;Combinations of sulfonamides and trimethoprim, incl. derivatives;Sulfadiazine and trimethoprim
+QJ01EW10;TRI40;Sulfonamides and trimethoprim;Combinations of sulfonamides and trimethoprim, incl. derivatives;Sulfadiazine and trimethoprim
+QJ01EW10;TRI00;Sulfonamides and trimethoprim;Combinations of sulfonamides and trimethoprim, incl. derivatives;Sulfadiazine and trimethoprim
+QJ01EW10;TIN50;Sulfonamides and trimethoprim;Combinations of sulfonamides and trimethoprim, incl. derivatives;Sulfadiazine and trimethoprim
+QJ01EW10;EQC40;Sulfonamides and trimethoprim;Combinations of sulfonamides and trimethoprim, incl. derivatives;Sulfadiazine and trimethoprim
+QJ01EW13;BOR00;Sulfonamides and trimethoprim;Combinations of sulfonamides and trimethoprim, incl. derivatives;Sulfadiazine and trimethoprim
+QJ01EW13;BIM00;Sulfonamides and trimethoprim;Combinations of sulfonamides and trimethoprim, incl. derivatives;Sulfadiazine and trimethoprim
+QJ01FA02;SPI00;Macrolides, lincosamides and streptogramins;Macrolides;Spiramycin
+QJ01FA90;TYL52;Macrolides, lincosamides and streptogramins;Macrolides;Tylosin
+QJ01FA90;TYL01;Macrolides, lincosamides and streptogramins;Macrolides;Tylosin
+QJ01FA90;TYL50;Macrolides, lincosamides and streptogramins;Macrolides;Tylosin
+QJ01FA90;TYL51;Macrolides, lincosamides and streptogramins;Macrolides;Tylosin
+QJ01FA92;AIV91;Macrolides, lincosamides and streptogramins;Macrolides;Tylvalosin
+QJ01FA92;AIV90;Macrolides, lincosamides and streptogramins;Macrolides;Tylvalosin
+QJ01FA92;AIV50;Macrolides, lincosamides and streptogramins;Macrolides;Tylvalosin
+QJ01FA92;AIV92;Macrolides, lincosamides and streptogramins;Macrolides;Tylvalosin
+QJ01FA92;AIV51;Macrolides, lincosamides and streptogramins;Macrolides;Tylvalosin
+QJ01FA94;DRA00;Macrolides, lincosamides and streptogramins;Macrolides;Tulathromycin
+QJ01FA95;ZAC00;Macrolides, lincosamides and streptogramins;Macrolides;Gamithromycin
+QJ01FA96;ZUP00;Macrolides, lincosamides and streptogramins;Macrolides;Tildipirosin
+QJ01FF01;6090;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01FF01;6091;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01FF01;6092;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01FF01;6093;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01FF01;6094;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01FF01;6095;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01FF01;8662;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01FF01;8663;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01FF01;8664;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01FF01;8665;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01FF01;8666;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01FF01;8667;Macrolides, lincosamides and streptogramins;Lincosamides;Clindamycin
+QJ01GB03;GEN00;Aminoglycoside antibacterials;Other aminoglycosides;Gentamicin
+QJ01MA90;BAY90;Quinolone and quinoxaline antibacterials;Fluoroquinolones;Enrofloxacin
+QJ01MA90;BAY00;Quinolone and quinoxaline antibacterials;Fluoroquinolones;Enrofloxacin
+QJ01MA90;BAY01;Quinolone and quinoxaline antibacterials;Fluoroquinolones;Enrofloxacin
+QJ01MA90;BAY30;Quinolone and quinoxaline antibacterials;Fluoroquinolones;Enrofloxacin
+QJ01MA90;ENR00;Quinolone and quinoxaline antibacterials;Fluoroquinolones;Enrofloxacin
+QJ01MA90;FEO00;Quinolone and quinoxaline antibacterials;Fluoroquinolones;Enrofloxacin
+QJ01MA92;ADV00;Quinolone and quinoxaline antibacterials;Fluoroquinolones;Danofloxacin
+QJ01MA92;ADV01;Quinolone and quinoxaline antibacterials;Fluoroquinolones;Danofloxacin
+QJ01MA94;DIC90;Quinolone and quinoxaline antibacterials;Fluoroquinolones;Difloxacin
+QJ01MA94;DIC01;Quinolone and quinoxaline antibacterials;Fluoroquinolones;Difloxacin
+QJ01RA01;STR00;Combinations of antibacterials;Combinations of antibacterials;Penicillins, combinations with other antibacterials
+QJ01RA01;ETC00;Combinations of antibacterials;Combinations of antibacterials;Penicillins, combinations with other antibacterials
+QJ01XQ01;TIA00;Other antibacterials;Pleuromutilins;Tiamulin
+QJ01XQ01;TIA90;Other antibacterials;Pleuromutilins;Tiamulin
+QJ01XQ01;TIA50;Other antibacterials;Pleuromutilins;Tiamulin
+QJ01XQ02;ECO91;Other antibacterials;Pleuromutilins;Valnemulin
+QJ01XX92;TIA90;Other antibacterials;Other antibacterials;Tiamulin
+QJ01XX92;TIA00;Other antibacterials;Other antibacterials;Tiamulin
+QJ01XX92;TIA50;Other antibacterials;Other antibacterials;Tiamulin
+QJ01XX94;ECO90;Other antibacterials;Other antibacterials;Valnemulin
+QJ01XX94;ECO92;Other antibacterials;Other antibacterials;Valnemulin
+QJ01XX94;ECO93;Other antibacterials;Other antibacterials;Valnemulin
