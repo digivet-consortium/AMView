@@ -55,10 +55,28 @@ am_variables <- function(varnames = "all") {
         DateOtherComment = character(),
         Country = "SE",
         NUTS2 = paste0("SE", c(11, 12, 21, 22, 23, 31, 32, 33)),
-        NUTS3 = paste0(
-            "SE",
-            c(110, 121, 122, 123, 124, 125, 211, 212, 213, 214, 221, 224, 231,
-                232, 311, 312, 313, 321, 322, 331, 332)
+        NUTS3 = c(
+            "SE110" = 0.01,
+            "SE121" = 0.03,
+            "SE122" = 0.03,
+            "SE123" = 0.1,
+            "SE124" = 0.1,
+            "SE125" = 0.03,
+            "SE211" = 0.05,
+            "SE212" = 0.03,
+            "SE213" = 0.05,
+            "SE214" = 0.02,
+            "SE221" = 0.05,
+            "SE224" = 0.2,
+            "SE231" = 0.05,
+            "SE232" = 0.1,
+            "SE311" = 0.05,
+            "SE312" = 0.03,
+            "SE313" = 0.02,
+            "SE321" = 0.005,
+            "SE322" = 0.015,
+            "SE331" = 0.025,
+            "SE332" = 0.005
         ),
         GeoComment = character(),
         HerdID = character(),
@@ -139,9 +157,11 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
     DateOther <- as.Date(rep(NA, n_rows))
     DateOtherComment <- rep(NA_character_, n_rows)
     Country <- sample(vars$Country, n_rows, TRUE)
-    NUTS2 <- sample(vars$NUTS2, n_rows, TRUE)
     NUTS3 <- sapply(seq_len(n_rows), function(i) {
-        sample(vars$NUTS3[startsWith(vars$NUTS3, NUTS2[i])], 1, TRUE)
+        sample(names(vars$NUTS3), size = 1, prob = vars$NUTS3)
+    })
+    NUTS2 <- sapply(NUTS3, function(x) {
+        vars$NUTS2[which(startsWith(x, vars$NUTS2))]
     })
     GeoComment <- rep("Location in Sweden", n_rows)
     HerdID <- paste0(Country, "_", sample(1:25, n_rows, TRUE))
@@ -154,7 +174,7 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
 
     Diagnosis <- factor(
         sapply(
-            n_rows, function(i) {
+            seq_len(n_rows), function(i) {
                 sample(names(vars$Diagnosis), size = 1, prob = vars$Diagnosis)
             }
         ),
@@ -201,7 +221,9 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
             round(sample(9800:10300, 1) * use_proportions[i, ]$proportion)
     }
 
-    ActiveSubstanceKg <- unlist(sapply(unique(use_proportions$year), function(y) {
+    ActiveSubstanceKg <-
+        unlist(sapply(unique(use_proportions$year), function(y) {
+
         df <- use_proportions[use_proportions$year == y, ]
         counts <- df$Freq
         substance <- df$substance_share
@@ -211,6 +233,8 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
                 return(rep(0, n))
 
             b <- runif(n, 0, m)
+
+            b / sum(b) * m
         }, counts, substance, SIMPLIFY = TRUE))
     }))
 
