@@ -4,4 +4,4 @@ file.copy(scripts, "inst/shinyapps-io/www", overwrite = TRUE)
 
 setwd("inst/shinyapps-io")
 
-rsconnect::deployApp(appName = "AMView")
+rsconnect::deployApp(appName = "AMView", forceUpdate = TRUE)
