@@ -4,8 +4,8 @@
 #' @param ... additional arguments
 #' @return a Shiny app object
 #' @export
-#' @include server.R
-#' @include ui.R
+#' @include app_server.R
+#' @include app_ui.R
 app <- function(...) {
     shiny::shinyApp(app_ui(), app_server, ...)
 }

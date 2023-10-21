@@ -28,8 +28,8 @@ Imports:
     shinyWidgets
 Collate:
     'AMView-package.R'
-    'ui.R'
-    'server.R'
+    'app_ui.R'
+    'app_server.R'
     'app.R'
     'data.R'
     'timeseries-ui.R'

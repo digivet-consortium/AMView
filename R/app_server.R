@@ -4,8 +4,9 @@
 #' @noRd
 app_server <- function(input, output, session) {
     amu <- get_amu()
-    countries <- shiny::reactiveVal(get_spatial_data(unique(amu$Country)))
+    countries <- get_spatial_data(unique(amu$Country))
     amu <- shiny::reactiveVal(amu)
+    countries <- shiny::reactiveVal(countries)
 
     atc <- get_atc()
     val_sub <- shiny::reactiveVal(sort(unique(atc$subgroup_2)))
@@ -75,8 +76,6 @@ app_server <- function(input, output, session) {
             atc_data <- atc()
 
             selected_groups <- input$filter_medication_group
-
-            print(selected_groups)
 
             if (is.null(selected_groups))
                 selected_groups <- sort(unique(atc_data$subgroup_1))
@@ -195,7 +194,6 @@ app_server <- function(input, output, session) {
         amu_data <- amu_data[
             , sum(ActiveSubstanceKg), by = c(x_agg, group_agg)
         ]
-        print(str(amu_data))
 
         data.table::setnames(amu_data, "V1", "N")
 
@@ -212,7 +210,7 @@ app_server <- function(input, output, session) {
         if (chart_type == "bar") {
             type <- "bar"
             mode <- NULL
-        } else if (chart_type == "lines") {
+        } else if (chart_type == "line") {
             type <- "scatter"
             mode <- "lines+markers"
         } else if (chart_type == "scatter") {
@@ -241,6 +239,7 @@ app_server <- function(input, output, session) {
         selected_area(NULL)
         create_map_data(
             amu_data = amu(),
+            regions = countries(),
             daterange = as.Date(input$map_slider),
             filter_species = input$map_filter_species,
             filter_gender = input$map_filter_gender,
@@ -254,6 +253,7 @@ app_server <- function(input, output, session) {
         selected_area(NULL)
         create_map_data(
             amu_data = amu(),
+            regions = countries(),
             daterange = as.Date(input$map_slider),
             filter_species = input$map_filter_species,
             filter_gender = input$map_filter_gender,
@@ -263,34 +263,52 @@ app_server <- function(input, output, session) {
         )
     })
 
-    shiny::observeEvent(input$map_shape_click, {
-        if (is.null(input$map_shape_click)) {
-            selected_area(NULL)
-            return()
-        }
-
-        prev_selected <- selected_area()
-        new_selected <- input$map_shape_click$id
-
+    shiny::observeEvent(selected_area(), {
+        s_a <- selected_area()
         map_proxy <- leaflet::leafletProxy(mapId = "map")
-
         m_d <- map_data()
 
-        map_proxy |> leaflet::removeShape("selected")
-
-        if (!is.null(prev_selected) && new_selected == prev_selected) {
-            selected_area(NULL)
+        if (is.null(s_a)) {
+            map_proxy |> leaflet::removeShape("selected")
         } else {
             map_proxy |> leaflet::addPolylines(
                 stroke = TRUE,
                 weight = 3,
                 color = "blue",
-                data = m_d[m_d$NUTS_ID == new_selected, ],
+                data = m_d[m_d$NUTS_ID == s_a, ],
                 layerId = "selected"
             )
+        }
+    }, ignoreNULL = FALSE)
+
+    shiny::observeEvent(input$map_shape_click, {
+        prev_selected <- selected_area()
+        new_selected <- input$map_shape_click$id
+
+        if (!is.null(prev_selected) && new_selected == prev_selected) {
+            selected_area(NULL)
+        } else {
             selected_area(new_selected)
         }
     }, ignoreNULL = FALSE)
+
+    shiny::observeEvent(input$help_timeseries, {
+        help_popup(
+            title = "Page guide",
+            content = shiny::p(
+                "This is a test!"
+            )
+        )
+    })
+
+    shiny::observeEvent(input$help_map, {
+        help_popup(
+            title = "Page guide",
+            content = shiny::p(
+                "This is a test!"
+            )
+        )
+    })
 
     output$download_timeseries <- shiny::downloadHandler(
         filename = "AMView_trend_data.csv",
@@ -326,6 +344,12 @@ app_server <- function(input, output, session) {
                     ),
                 ),
                 layerId = ~NUTS_ID
+            ) |>
+            leaflet::addLegend(
+                position = "bottomleft",
+                pal = palette,
+                values = m_d$N,
+                title = "AMU per region"
             )
     })
 
@@ -343,7 +367,7 @@ app_server <- function(input, output, session) {
             data = dt,
             count_var = "ActiveSubstanceKg",
             group_var = "AnimalType",
-            title = "Substance consumed (kg) per animal type/species"
+            title = "AMU per animal type/species"
         )
     })
 
@@ -361,7 +385,7 @@ app_server <- function(input, output, session) {
             data = dt,
             count_var = "ActiveSubstanceKg",
             group_var = "Diagnosis",
-            title = "Substance consumed (kg) per diagnosis"
+            title = "AMU per diagnosis"
         )
     })
 
@@ -379,23 +403,37 @@ app_server <- function(input, output, session) {
             data = dt,
             count_var = "ActiveSubstanceKg",
             group_var = "subgroup_1",
-            title = "Substance consumed (kg) per medication group"
+            title = "AMU per medication group"
         )
     })
 
     output$selected_region <- shiny::renderUI({
         region <- selected_area()
-        print(region)
 
         if (is.null(region)) {
             region <- "All regions"
         } else {
             m_d <- map_data()
-            region <- m_d[m_d$NUTS_ID == region, ]$NAME_LATN
+            region <- paste0(
+                m_d[m_d$NUTS_ID == region, ]$NAME_LATN, " (", region, ")"
+            )
         }
 
         shiny::h4(paste0("Selected: ", region))
     })
+}
+
+#' @noRd
+help_popup <- function(title, content) {
+    shiny::showModal(
+        shiny::modalDialog(
+            content,
+            title = title,
+            footer = shiny::modalButton("Close"),
+            easyClose = TRUE,
+            size = "l"
+        )
+    )
 }
 
 #' @noRd
@@ -426,6 +464,7 @@ agg_x <- function(agg) {
 #' @noRd
 create_map_data <- function(
     amu_data,
+    regions,
     daterange,
     filter_species,
     filter_gender,
@@ -438,11 +477,9 @@ create_map_data <- function(
     all_ages <- amu_data$AgeCategory
     all_groups <- amu_data$subgroup_1
 
-    countries <- unique(amu_data$Country)
-    countries <- get_spatial_data(countries)
-
     DateTransaction <- AnimalType <- Gender <- #nolint
     AgeCategory <- subgroup_1 <- ActiveSubstanceKg <- NULL #nolint
+
     dt <- amu_data[
         DateTransaction >= daterange[1] &
             DateTransaction <= daterange[2] &
@@ -465,11 +502,11 @@ create_map_data <- function(
 
     sums <- dt[, sum(ActiveSubstanceKg), by = "NUTS3"]
 
-    stopifnot(all(sums$NUTS3 %in% countries$NUTS_ID))
+    stopifnot(all(sums$NUTS3 %in% regions$NUTS_ID))
 
-    countries[match(sums$NUTS3, countries$NUTS_ID), "N"] <- sums$V1
+    regions[match(sums$NUTS3, regions$NUTS_ID), "N"] <- sums$V1
 
-    return(countries)
+    return(regions)
 }
 
 #' @noRd
@@ -488,7 +525,7 @@ summary_pie <- function(data, count_var, group_var, title) {
         labels = ~get(group_var),
         values = ~V1,
         type = "pie",
-        textinfo = "none",
-        colors = "YlOrRd"
-    ) |> plotly::layout(title = title, showlegend = TRUE)
+        textinfo = "label+percent",
+        textposition = "outside"
+    ) |> plotly::layout(title = title, showlegend = FALSE)
 }

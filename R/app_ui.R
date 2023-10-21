@@ -20,7 +20,7 @@ app_ui <- function() {
         about_panel(),
 
         theme = bslib::bs_theme(bootswatch = "flatly"),
-        title = "AMView"
+        title = "AMView - Visualize AMU"
     )
 }
 
@@ -87,12 +87,12 @@ map_panel <- function(species, groups, start_date, end_date) {
                         filename = "AMView_map",
                         id = "map",
                         icon = shiny::icon("image"),
-                        label = "Save map as PNG"
+                        label = " Save map as PNG"
                     ),
                     shiny::br(), shiny::br(),
                     shiny::downloadButton(
                         outputId = "download_map",
-                        label = "Download current map data",
+                        label = " Download current map data",
                         icon = shiny::icon("file-csv")
                     ),
                     shiny::br(), shiny::br(),
@@ -102,7 +102,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                         icon = shiny::icon("circle-info")
                     )
                 ),
-                width = 2
+                width = 3
             ),
             shiny::column(
                 shiny::fluidRow(
@@ -130,7 +130,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                         width = 10, offset = 1
                     ),
                 ),
-                width = 6
+                width = 5
             ),
             shiny::column(
                 shiny::fluidRow(
@@ -138,7 +138,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                         shinycssloaders::withSpinner(
                             plotly::plotlyOutput(
                                 outputId = "pie_species",
-                                height = "30vh", width = "100%"
+                                height = "30vh", width = "95%"
                             )
                         ),
                         width = 12
@@ -149,7 +149,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                         shinycssloaders::withSpinner(
                             plotly::plotlyOutput(
                                 outputId = "pie_diagnosis",
-                                height = "30vh", width = "100%"
+                                height = "30vh", width = "95%"
                             )
                         ),
                         width = 12
@@ -160,7 +160,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                         shinycssloaders::withSpinner(
                             plotly::plotlyOutput(
                                 outputId = "pie_medication",
-                                height = "30vh", width = "100%"
+                                height = "30vh", width = "95%"
                             )
                         ),
                         width = 12

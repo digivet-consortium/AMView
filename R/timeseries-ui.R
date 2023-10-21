@@ -17,14 +17,14 @@ timeseries_filters <- function(species, groups) {
                             filename = "AMView_trendplot",
                             id = "plot",
                             icon = shiny::icon("image"),
-                            label = "Save plot as PNG"
+                            label = " Save plot as PNG"
                         ),
                         width = 3, offset = 1
                     ),
                     shiny::column(
                         shiny::downloadButton(
                             outputId = "download_timeseries",
-                            label = "Download current data selection",
+                            label = " Download current data selection",
                             icon = shiny::icon("file-csv")
                         ),
                         width = 4, offset = 1
@@ -143,7 +143,7 @@ timeseries_output <- function(start_date, end_date) {
             shiny::column(
                 shiny::sliderInput(
                     inputId = "timeseries_slider",
-                    label = "Date range",
+                    label = NULL,
                     min = start_date,
                     max = end_date,
                     value = c(start_date, end_date),
@@ -156,9 +156,9 @@ timeseries_output <- function(start_date, end_date) {
                     inputId = "chart_type",
                     label = "Chart type",
                     choices = list(
-                        "Bar chart" = "bar",
-                        "Line chart" = "lines",
-                        "Scatter plot" = "scatter"
+                        "Bar" = "bar",
+                        "Line" = "line",
+                        "Scatter" = "scatter"
                     ),
                     width = "100%",
                     selected = "bar"
