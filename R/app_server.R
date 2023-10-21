@@ -192,7 +192,7 @@ app_server <- function(input, output, session) {
         x_agg <- agg_x(input$agg_x)
         group_agg <- input$agg_group
         amu_data <- amu_data[
-            , signif(sum(ActiveSubstanceKg), 3), by = c(x_agg, group_agg)
+            , round(sum(ActiveSubstanceKg), 2), by = c(x_agg, group_agg)
         ]
 
         data.table::setnames(amu_data, "V1", "N")
@@ -500,7 +500,7 @@ create_map_data <- function(
     if (isFALSE(geo_group))
         return(dt)
 
-    sums <- dt[, signif(sum(ActiveSubstanceKg), 3), by = "NUTS3"]
+    sums <- dt[, round(sum(ActiveSubstanceKg), 2), by = "NUTS3"]
 
     stopifnot(all(sums$NUTS3 %in% regions$NUTS_ID))
 
