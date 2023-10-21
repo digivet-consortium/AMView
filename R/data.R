@@ -80,7 +80,11 @@ am_variables <- function(varnames = "all") {
         ),
         GeoComment = character(),
         HerdID = character(),
-        AnimalType = c("Beef cattle", "Dairy cattle", "Other cattle"),
+        AnimalType = c(
+            "Beef cattle" = 0.4,
+            "Dairy cattle" = 0.55,
+            "Other cattle" = 0.05
+        ),
         ProductionType = c("Breeders", "Meat/Fattening", "Milk"),
         Gender = c("Male", "Female", "Unknown"),
         AgeCategory = c("<6 months", "6-24 months", ">24 months"),
@@ -165,7 +169,11 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
     })
     GeoComment <- rep("Location in Sweden", n_rows)
     HerdID <- paste0(Country, "_", sample(1:25, n_rows, TRUE))
-    AnimalType <- sample(vars$AnimalType, n_rows, TRUE)
+    AnimalType <- sapply(
+        seq_len(n_rows), function(i) {
+            sample(names(vars$AnimalType), size = 1, prob = vars$AnimalType)
+        }
+    )
     ProductionType <- sample(vars$ProductionType, n_rows, TRUE)
     Gender <- sample(vars$Gender, n_rows, TRUE)
     AgeCategory <- sample(vars$AgeCategory, n_rows, TRUE)
