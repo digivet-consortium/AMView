@@ -69,11 +69,11 @@ am_variables <- function(varnames = "all") {
         TreatmentPurpose = c("Metaphylactic", "Treatment"),
         Indication = paste("Indication", 1:10),
         Diagnosis = c(
-            "Obstetrics and reproductive disorder",
-            "Lameness",
-            "Mastitis",
-            "Other infection",
-            "Other"
+            "Mastitis" = 0.65,
+            "Lameness" = 0.12,
+            "Obstetrics and reproductive disorder" = 0.09,
+            "Other infection" = 0.06,
+            "Other" = 0.08
         ),
         AdministrationMethod = c(
             "Injectable products", "Intramammary products", "Oral solutions",
@@ -109,7 +109,17 @@ am_variables <- function(varnames = "all") {
 #' @return a data.frame with the dummy data
 #' @export
 amu_dummy_data <- function(n_rows, start_date, end_date) {
-    atc <- get_atc(include_product = TRUE)
+    use_proportions <- data.table::fread(
+        system.file("extdata/use_proportions.csv", package = "AMView"),
+        dec = ","
+    )
+
+    subgroups <- unique(use_proportions$medication)
+
+    atc_code <- NULL #nolint
+    atc <- get_atc(include_product = TRUE)[
+        sapply(atc_code, function(x) any(startsWith(x, subgroups)))
+    ]
 
     start_date <- as.Date(start_date)
     end_date <- as.Date(end_date)
@@ -141,7 +151,16 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
     AgeCategory <- sample(vars$AgeCategory, n_rows, TRUE)
     TreatmentPurpose <- sample(vars$TreatmentPurpose, n_rows, TRUE)
     Indication <- sample(vars$Indication, n_rows, TRUE)
-    Diagnosis <- sample(vars$Diagnosis, n_rows, TRUE)
+
+    Diagnosis <- factor(
+        sapply(
+            n_rows, function(i) {
+                sample(names(vars$Diagnosis), size = 1, prob = vars$Diagnosis)
+            }
+        ),
+        levels = names(vars$Diagnosis)
+    )
+
     AdministrationMethod <- sample(vars$AdministrationMethod, n_rows, TRUE)
     TreatedUnit <- sample(vars$TreatedUnit, n_rows, TRUE)
     NumberOfAnimals <- sapply(seq_len(n_rows), function(i) {
@@ -154,7 +173,46 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
     MedicalProductCode <- atc$handelsvarakod[product_index]
     ATCcode <- atc$atc_code[product_index]
     ActiveIngredient <- atc$substance[product_index]
-    ActiveSubstanceKg <- sample(seq(0.5, 10, 0.5), n_rows, TRUE)
+    year <- as.numeric(format(DateTransaction, "%Y"))
+    group <- sapply(
+        ATCcode, function(x) {
+            subgroups[which(startsWith(x, subgroups))]
+        }, USE.NAMES = FALSE
+    )
+
+    freqs <- as.data.frame(table(list(year = year, medication = group)))
+    freqs$year <- as.integer(as.character(freqs$year))
+    freqs$medication <- as.character(freqs$medication)
+
+    use_proportions <- merge(
+        freqs,
+        use_proportions,
+        by = c("year", "medication"),
+        all.x = TRUE
+    )
+
+    use_proportions$substance_share  <- numeric(nrow(use_proportions))
+
+    for (y in unique(use_proportions$year)) {
+        i <- use_proportions$year == y
+        use_proportions[i, ]$proportion <-
+            prop.table(use_proportions[i, ]$proportion)
+        use_proportions[i, ]$substance_share <-
+            round(sample(9800:10300, 1) * use_proportions[i, ]$proportion)
+    }
+
+    ActiveSubstanceKg <- unlist(sapply(unique(use_proportions$year), function(y) {
+        df <- use_proportions[use_proportions$year == y, ]
+        counts <- df$Freq
+        substance <- df$substance_share
+
+        buckets <- unlist(mapply(function(n, m) {
+            if (m == 0)
+                return(rep(0, n))
+
+            b <- runif(n, 0, m)
+        }, counts, substance, SIMPLIFY = TRUE))
+    }))
 
     data <- data.frame(
         EntryID,
@@ -193,7 +251,7 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
 
     data$EntryID <- rownames(data) <- seq_len(nrow(data))
 
-    data
+    data[data$ActiveSubstanceKg > 0, ]
 }
 
 #' @noRd
