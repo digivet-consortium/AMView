@@ -242,7 +242,7 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
 
             b <- runif(n, 0, m)
 
-            b / sum(b) * m
+            signif(b / sum(b) * m, digits = 3)
         }, counts, substance, SIMPLIFY = TRUE))
     }))
 
