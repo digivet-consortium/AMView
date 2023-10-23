@@ -108,11 +108,11 @@ app_server <- function(input, output, session) {
             )
 
             choice_names <- c(
-                "None", "Animal type/species", choice_name,
+                "Animal type/species", choice_name,
                 "Diagnosis", "Medication group"
             )
             choice_values <- c(
-                "", "AnimalType", choice_value, "Diagnosis", "subgroup_1"
+                "AnimalType", choice_value, "Diagnosis", "subgroup_1"
             )
 
             shiny::updateRadioButtons(
@@ -125,7 +125,7 @@ app_server <- function(input, output, session) {
                         "AnimalType", "Diagnosis", "subgroup_1"
                     ),
                     current_group,
-                    ""
+                    choice_value
                 )
             )
         }
@@ -189,23 +189,17 @@ app_server <- function(input, output, session) {
             )
         )
 
-
-        agg <- agg_x(input$agg_x)
+        x_agg <- agg_x(input$agg_x)
         group_agg <- input$agg_group
-
-
-        if (nchar(group_agg) > 0)
-            agg <- c(agg, group_agg)
-
         amu_data <- amu_data[
-            , round(sum(ActiveSubstanceKg), 2), by = agg
+            , round(sum(ActiveSubstanceKg), 2), by = c(x_agg, group_agg)
         ]
 
         data.table::setnames(amu_data, "V1", "N")
 
         selected_area(NULL)
 
-        amu_data[order(get(agg[1]))]
+        amu_data[order(get(x_agg), get(group_agg))]
     })
 
     output$plot <- plotly::renderPlotly({
@@ -226,26 +220,14 @@ app_server <- function(input, output, session) {
             stop("This shouldn't happen")
         }
 
-        if (nchar(input$agg_group) > 0) {
-            p <- plotly::plot_ly(
-                data = timeseries_data(),
-                x = ~get(x),
-                y = ~N,
-                type = type,
-                mode = mode,
-                color = ~get(input$agg_group)
-            )
-        } else {
-            p <- plotly::plot_ly(
-                data = timeseries_data(),
-                x = ~get(x),
-                y = ~N,
-                type = type,
-                mode = mode
-            )
-        }
-
-        p |>
+        plotly::plot_ly(
+            data = timeseries_data(),
+            x = ~get(x),
+            y = ~N,
+            type = type,
+            mode = mode,
+            color = ~get(input$agg_group)
+        ) |>
             plotly::layout(
                 xaxis = list(title = x),
                 yaxis = list(title = "Substance consumed (kg)"),
@@ -364,7 +346,7 @@ app_server <- function(input, output, session) {
                 layerId = ~NUTS_ID
             ) |>
             leaflet::addLegend(
-                position = "bottomright",
+                position = "bottomleft",
                 pal = palette,
                 values = m_d$N,
                 title = "AMU per region"

@@ -52,17 +52,15 @@ timeseries_filters <- function(species, groups) {
                             inputId = "agg_group",
                             label = NULL,
                             choiceNames = c(
-                                "None",
                                 "Animal type/species",
                                 "Region (NUTS3)",
                                 "Diagnosis",
                                 "Medication group"
                             ),
                             choiceValues = c(
-                                "", "AnimalType", "NUTS3",
-                                "Diagnosis", "subgroup_1"
+                                "AnimalType", "NUTS3", "Diagnosis", "subgroup_1"
                             ),
-                            selected = ""
+                            selected = "NUTS3"
                         ),
                         width = 6
                     )
@@ -136,9 +134,7 @@ timeseries_output <- function(start_date, end_date) {
         shiny::fluidRow(
             shiny::column(
                 shinycssloaders::withSpinner(
-                    plotly::plotlyOutput(
-                        outputId = "plot", height = "45vh"
-                    ), hide.ui = FALSE
+                    plotly::plotlyOutput(outputId = "plot"), hide.ui = FALSE
                 ),
                 width = 12
             )

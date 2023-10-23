@@ -168,7 +168,7 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
         vars$NUTS2[which(startsWith(x, vars$NUTS2))]
     })
     GeoComment <- rep("Location in Sweden", n_rows)
-    HerdID <- paste0(Country, "_", sample(1:25, n_rows, TRUE))
+    HerdID <- paste0(Country, "_", sample(1:250, n_rows, TRUE))
     AnimalType <- sapply(
         seq_len(n_rows), function(i) {
             sample(names(vars$AnimalType), size = 1, prob = vars$AnimalType)
