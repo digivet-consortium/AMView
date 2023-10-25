@@ -19,6 +19,7 @@
 #' @importFrom leaflet colorBin
 #' @importFrom leaflet labelOptions
 #' @importFrom leaflet leaflet
+#' @importFrom leaflet leafletOptions
 #' @importFrom leaflet leafletOutput
 #' @importFrom leaflet leafletProxy
 #' @importFrom leaflet removeShape

@@ -137,7 +137,7 @@ timeseries_output <- function(start_date, end_date) {
             shiny::column(
                 shinycssloaders::withSpinner(
                     plotly::plotlyOutput(
-                        outputId = "plot", height = "45vh"
+                        outputId = "plot", height = "43vh"
                     ), hide.ui = FALSE
                 ),
                 width = 12

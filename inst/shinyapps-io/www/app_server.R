@@ -108,11 +108,11 @@ app_server <- function(input, output, session) {
             )
 
             choice_names <- c(
-                "Animal type/species", choice_name,
+                "None", "Animal type/species", choice_name,
                 "Diagnosis", "Medication group"
             )
             choice_values <- c(
-                "AnimalType", choice_value, "Diagnosis", "subgroup_1"
+                "", "AnimalType", choice_value, "Diagnosis", "subgroup_1"
             )
 
             shiny::updateRadioButtons(
@@ -125,7 +125,7 @@ app_server <- function(input, output, session) {
                         "AnimalType", "Diagnosis", "subgroup_1"
                     ),
                     current_group,
-                    choice_value
+                    ""
                 )
             )
         }
@@ -189,17 +189,23 @@ app_server <- function(input, output, session) {
             )
         )
 
-        x_agg <- agg_x(input$agg_x)
+
+        agg <- agg_x(input$agg_x)
         group_agg <- input$agg_group
+
+
+        if (nchar(group_agg) > 0)
+            agg <- c(agg, group_agg)
+
         amu_data <- amu_data[
-            , round(sum(ActiveSubstanceKg), 2), by = c(x_agg, group_agg)
+            , round(sum(ActiveSubstanceKg), 2), by = agg
         ]
 
         data.table::setnames(amu_data, "V1", "N")
 
         selected_area(NULL)
 
-        amu_data[order(get(x_agg), get(group_agg))]
+        amu_data[order(get(agg[1]))]
     })
 
     output$plot <- plotly::renderPlotly({
@@ -220,14 +226,26 @@ app_server <- function(input, output, session) {
             stop("This shouldn't happen")
         }
 
-        plotly::plot_ly(
-            data = timeseries_data(),
-            x = ~get(x),
-            y = ~N,
-            type = type,
-            mode = mode,
-            color = ~get(input$agg_group)
-        ) |>
+        if (nchar(input$agg_group) > 0) {
+            p <- plotly::plot_ly(
+                data = timeseries_data(),
+                x = ~get(x),
+                y = ~N,
+                type = type,
+                mode = mode,
+                color = ~get(input$agg_group)
+            )
+        } else {
+            p <- plotly::plot_ly(
+                data = timeseries_data(),
+                x = ~get(x),
+                y = ~N,
+                type = type,
+                mode = mode
+            )
+        }
+
+        p |>
             plotly::layout(
                 xaxis = list(title = x),
                 yaxis = list(title = "Substance consumed (kg)"),
@@ -295,8 +313,8 @@ app_server <- function(input, output, session) {
     shiny::observeEvent(input$help_timeseries, {
         help_popup(
             title = "Page guide",
-            content = shiny::p(
-                "This is a test!"
+            content = shiny::includeMarkdown(
+                path_to_markdown("popup_timeseries.md")
             )
         )
     })
@@ -304,8 +322,8 @@ app_server <- function(input, output, session) {
     shiny::observeEvent(input$help_map, {
         help_popup(
             title = "Page guide",
-            content = shiny::p(
-                "This is a test!"
+            content = shiny::includeMarkdown(
+                path_to_markdown("popup_map.md")
             )
         )
     })
@@ -324,6 +342,16 @@ app_server <- function(input, output, session) {
         }
     )
 
+    output$download_data_structure <- shiny::downloadHandler(
+        filename = "AMU_data_structure.xlsx",
+        content = function(f) {
+            file.copy(
+                from = path_to_data_structure(),
+                to = f
+            )
+        }
+    )
+
     output$map <- leaflet::renderLeaflet({
         m_d <- map_data()
         palette <- leaflet::colorBin(palette = "YlOrRd", domain = m_d$N)
@@ -331,7 +359,10 @@ app_server <- function(input, output, session) {
             m_d$NAME_LATN, ": ", m_d$N, " kg"
         ))
 
-        leaflet::leaflet(data = m_d)  |>
+        leaflet::leaflet(
+            data = m_d,
+            options = leaflet::leafletOptions(scrollWheelZoom = FALSE)
+        )  |>
             leaflet::addTiles() |>
             leaflet::addPolygons(
                 fillOpacity = 1, fillColor = palette(m_d$N),
@@ -346,7 +377,7 @@ app_server <- function(input, output, session) {
                 layerId = ~NUTS_ID
             ) |>
             leaflet::addLegend(
-                position = "bottomleft",
+                position = "bottomright",
                 pal = palette,
                 values = m_d$N,
                 title = "AMU per region"
@@ -525,7 +556,11 @@ summary_pie <- function(data, count_var, group_var, title) {
         labels = ~get(group_var),
         values = ~V1,
         type = "pie",
-        textinfo = "label+percent",
-        textposition = "outside"
-    ) |> plotly::layout(title = title, showlegend = FALSE)
+        textinfo = "none"
+    ) |> plotly::layout(
+        title = title, showlegend = TRUE, legend = list(
+            xanchor = "center", x = 0.5, orientation = "h", autosize = FALSE,
+            font = list(size = 8)
+        )
+    )
 }

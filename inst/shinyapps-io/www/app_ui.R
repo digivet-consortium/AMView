@@ -176,6 +176,23 @@ map_panel <- function(species, groups, start_date, end_date) {
 #' @noRd
 about_panel <- function() {
     shiny::tabPanel(
+        shiny::fluidRow(
+            shiny::column(
+                shiny::includeMarkdown(
+                    system.file("markdown/about.md", package = "AMView")
+                ),
+                width = 8, offset = 2
+            )
+        ),
+        shiny::fluidRow(
+            shiny::column(
+                shiny::downloadButton(
+                    outputId = "download_data_structure",
+                    label = " Common data structure: download template"
+                ),
+                width = 3, offset = 2
+            )
+        ),
         title = "About"
     )
 }

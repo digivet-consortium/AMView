@@ -1,3 +1,13 @@
+#' @noRd
+path_to_data_structure <- function() {
+    system.file("extdata/Content mapping AMU.xlsx", package = "AMView")
+}
+
+#' @noRd
+path_to_markdown <- function(filename) {
+    system.file(file.path("markdown", filename), package = "AMView")
+}
+
 #' Get ATC codes datasest
 #' @noRd
 get_atc <- function(include_product = FALSE) {

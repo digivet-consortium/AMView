@@ -313,8 +313,8 @@ app_server <- function(input, output, session) {
     shiny::observeEvent(input$help_timeseries, {
         help_popup(
             title = "Page guide",
-            content = shiny::p(
-                "This is a test!"
+            content = shiny::includeMarkdown(
+                path_to_markdown("popup_timeseries.md")
             )
         )
     })
@@ -322,8 +322,8 @@ app_server <- function(input, output, session) {
     shiny::observeEvent(input$help_map, {
         help_popup(
             title = "Page guide",
-            content = shiny::p(
-                "This is a test!"
+            content = shiny::includeMarkdown(
+                path_to_markdown("popup_map.md")
             )
         )
     })
@@ -342,6 +342,16 @@ app_server <- function(input, output, session) {
         }
     )
 
+    output$download_data_structure <- shiny::downloadHandler(
+        filename = "AMU_data_structure.xlsx",
+        content = function(f) {
+            file.copy(
+                from = path_to_data_structure(),
+                to = f
+            )
+        }
+    )
+
     output$map <- leaflet::renderLeaflet({
         m_d <- map_data()
         palette <- leaflet::colorBin(palette = "YlOrRd", domain = m_d$N)
@@ -349,7 +359,10 @@ app_server <- function(input, output, session) {
             m_d$NAME_LATN, ": ", m_d$N, " kg"
         ))
 
-        leaflet::leaflet(data = m_d)  |>
+        leaflet::leaflet(
+            data = m_d,
+            options = leaflet::leafletOptions(scrollWheelZoom = FALSE)
+        )  |>
             leaflet::addTiles() |>
             leaflet::addPolygons(
                 fillOpacity = 1, fillColor = palette(m_d$N),
@@ -543,7 +556,11 @@ summary_pie <- function(data, count_var, group_var, title) {
         labels = ~get(group_var),
         values = ~V1,
         type = "pie",
-        textinfo = "label+percent",
-        textposition = "outside"
-    ) |> plotly::layout(title = title, showlegend = FALSE)
+        textinfo = "none"
+    ) |> plotly::layout(
+        title = title, showlegend = TRUE, legend = list(
+            xanchor = "center", x = 0.5, orientation = "h", autosize = FALSE,
+            font = list(size = 8)
+        )
+    )
 }
