@@ -179,7 +179,7 @@ about_panel <- function() {
         shiny::fluidRow(
             shiny::column(
                 shiny::includeMarkdown(
-                    system.file("markdown/about.md", package = "AMView")
+                    path_to_markdown("about.md")
                 ),
                 width = 8, offset = 2
             )
