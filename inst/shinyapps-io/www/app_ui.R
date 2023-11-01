@@ -105,15 +105,9 @@ map_panel <- function(species, groups, start_date, end_date) {
                 width = 3
             ),
             shiny::column(
-                shiny::fluidRow(
-                    shiny::column(
-                        shiny::uiOutput(outputId = "selected_region"),
-                        width = 12
-                    )
-                ),
                 shinycssloaders::withSpinner(
                     leaflet::leafletOutput(
-                        outputId = "map", height = "76vh"
+                        outputId = "map", height = "75vh"
                     ), hide.ui = FALSE
                 ),
                 shiny::br(),
@@ -135,10 +129,20 @@ map_panel <- function(species, groups, start_date, end_date) {
             shiny::column(
                 shiny::fluidRow(
                     shiny::column(
+                        shiny::uiOutput(outputId = "selected_region"),
+                        shiny::p(
+                            "Hover the pie charts for detailed information.",
+                            style = "font-size:11px"
+                        ),
+                        width = 12
+                    )
+                ),
+                shiny::fluidRow(
+                    shiny::column(
                         shinycssloaders::withSpinner(
                             plotly::plotlyOutput(
                                 outputId = "pie_species",
-                                height = "30vh", width = "95%"
+                                height = "27vh", width = "95%"
                             )
                         ),
                         width = 12
@@ -149,7 +153,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                         shinycssloaders::withSpinner(
                             plotly::plotlyOutput(
                                 outputId = "pie_diagnosis",
-                                height = "30vh", width = "95%"
+                                height = "27vh", width = "95%"
                             )
                         ),
                         width = 12
@@ -160,7 +164,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                         shinycssloaders::withSpinner(
                             plotly::plotlyOutput(
                                 outputId = "pie_medication",
-                                height = "30vh", width = "95%"
+                                height = "27vh", width = "95%"
                             )
                         ),
                         width = 12

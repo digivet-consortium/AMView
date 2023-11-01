@@ -442,7 +442,7 @@ app_server <- function(input, output, session) {
         region <- selected_area()
 
         if (is.null(region)) {
-            region <- "All regions"
+            region <- "all regions"
         } else {
             m_d <- map_data()
             region <- paste0(
@@ -450,7 +450,7 @@ app_server <- function(input, output, session) {
             )
         }
 
-        shiny::h4(paste0("Selected: ", region))
+        shiny::h5(paste0("AMU breakdown: ", region))
     })
 }
 
@@ -558,9 +558,10 @@ summary_pie <- function(data, count_var, group_var, title) {
         type = "pie",
         textinfo = "none"
     ) |> plotly::layout(
-        title = title, showlegend = TRUE, legend = list(
-            xanchor = "center", x = 0.5, orientation = "h", autosize = FALSE,
-            font = list(size = 8)
-        )
+        title = list(text = title, font = list(size = 11)), showlegend = FALSE
+        #, legend = list(
+        #     xanchor = "center", x = 0.5, orientation = "h", autosize = FALSE,
+        #     font = list(size = 8)
+        # )
     )
 }
