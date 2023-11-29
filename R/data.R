@@ -8,7 +8,7 @@ path_to_markdown <- function(filename) {
     system.file(file.path("markdown", filename), package = "AMView")
 }
 
-#' Get ATC codes datasest
+#' Get ATC codes dataset
 #' @noRd
 get_atc <- function(include_product = FALSE) {
     dt <- data.table::fread(system.file("extdata/atc.csv", package = "AMView"))
