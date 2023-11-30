@@ -1,7 +1,7 @@
 #' Configure the backend of the map page
 #'
 #' @noRd
-map_server <- function(id, amu, countries, atc, val_sub) {
+map_server <- function(id, amu, countries) {
     shiny::moduleServer(id, function(input, output, session) {
         ns <- shiny::NS(id)
 
@@ -24,7 +24,7 @@ map_server <- function(id, amu, countries, atc, val_sub) {
 
                 populate_selection(
                     session = session,
-                    select_id = ns("map_filter_age"),
+                    select_id = ns("filter_age"),
                     choices = amu_data[
                         amu_data$AnimalType %in%
                             selected_species, ]$AgeCategory
@@ -38,11 +38,11 @@ map_server <- function(id, amu, countries, atc, val_sub) {
             create_map_data(
                 amu_data = amu(),
                 regions = countries(),
-                daterange = as.Date(input$map_slider),
-                filter_species = input$map_filter_species,
-                filter_gender = input$map_filter_gender,
-                filter_age = input$map_filter_age,
-                filter_medication = input$map_filter_medication,
+                daterange = as.Date(input$slider),
+                filter_species = input$filter_species,
+                filter_gender = input$filter_gender,
+                filter_age = input$filter_age,
+                filter_medication = input$filter_medication,
                 geo_group = TRUE
             )
         })
@@ -52,11 +52,11 @@ map_server <- function(id, amu, countries, atc, val_sub) {
             create_map_data(
                 amu_data = amu(),
                 regions = countries(),
-                daterange = as.Date(input$map_slider),
-                filter_species = input$map_filter_species,
-                filter_gender = input$map_filter_gender,
-                filter_age = input$map_filter_age,
-                filter_medication = input$map_filter_medication,
+                daterange = as.Date(input$slider),
+                filter_species = input$filter_species,
+                filter_gender = input$filter_gender,
+                filter_age = input$filter_age,
+                filter_medication = input$filter_medication,
                 geo_group = FALSE
             )
         })
@@ -207,4 +207,74 @@ map_server <- function(id, amu, countries, atc, val_sub) {
             }
         )
     })
+}
+
+#' @noRd
+create_map_data <- function(
+    amu_data,
+    regions,
+    daterange,
+    filter_species,
+    filter_gender,
+    filter_age,
+    filter_medication,
+    geo_group = TRUE
+) {
+    all_species <- amu_data$AnimalType
+    all_genders <- amu_data$Gender
+    all_ages <- amu_data$AgeCategory
+    all_groups <- amu_data$subgroup_1
+
+    DateTransaction <- AnimalType <- Gender <- #nolint
+    AgeCategory <- subgroup_1 <- ActiveSubstanceKg <- NULL #nolint
+
+    dt <- amu_data[
+        DateTransaction >= daterange[1] &
+            DateTransaction <= daterange[2] &
+            AnimalType %in% filter_data(
+                all_species, filter_species
+            ) &
+            Gender %in% filter_data(
+                all_genders, filter_gender
+            ) &
+            AgeCategory %in% filter_data(
+                all_ages, filter_age
+            ) &
+            subgroup_1 %in% filter_data(
+                all_groups, filter_medication
+            )
+    ]
+
+    if (isFALSE(geo_group))
+        return(dt)
+
+    sums <- dt[, round(sum(ActiveSubstanceKg), 2), by = "NUTS3"]
+
+    stopifnot(all(sums$NUTS3 %in% regions$NUTS_ID))
+
+    regions[match(sums$NUTS3, regions$NUTS_ID), "N"] <- sums$V1
+
+    return(regions)
+}
+
+#' @noRd
+summary_pie <- function(data, count_var, group_var, title) {
+    stopifnot(
+        data.table::is.data.table(data),
+        count_var %in% colnames(data),
+        group_var %in% colnames(data),
+        is.character(title)
+    )
+
+    data <- data[, sum(get(count_var)), by = group_var]
+
+    plotly::plot_ly(
+        data = data,
+        labels = ~get(group_var),
+        values = ~V1,
+        type = "pie",
+        textinfo = "none"
+    ) |> plotly::layout(
+        title = list(text = title, font = list(size = 11)), showlegend = FALSE
+    )
 }

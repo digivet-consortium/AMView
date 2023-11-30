@@ -236,71 +236,12 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
 }
 
 #' @noRd
-create_map_data <- function(
-    amu_data,
-    regions,
-    daterange,
-    filter_species,
-    filter_gender,
-    filter_age,
-    filter_medication,
-    geo_group = TRUE
-) {
-    all_species <- amu_data$AnimalType
-    all_genders <- amu_data$Gender
-    all_ages <- amu_data$AgeCategory
-    all_groups <- amu_data$subgroup_1
-
-    DateTransaction <- AnimalType <- Gender <- #nolint
-    AgeCategory <- subgroup_1 <- ActiveSubstanceKg <- NULL #nolint
-
-    dt <- amu_data[
-        DateTransaction >= daterange[1] &
-            DateTransaction <= daterange[2] &
-            AnimalType %in% filter_data(
-                all_species, filter_species
-            ) &
-            Gender %in% filter_data(
-                all_genders, filter_gender
-            ) &
-            AgeCategory %in% filter_data(
-                all_ages, filter_age
-            ) &
-            subgroup_1 %in% filter_data(
-                all_groups, filter_medication
-            )
-    ]
-
-    if (isFALSE(geo_group))
-        return(dt)
-
-    sums <- dt[, round(sum(ActiveSubstanceKg), 2), by = "NUTS3"]
-
-    stopifnot(all(sums$NUTS3 %in% regions$NUTS_ID))
-
-    regions[match(sums$NUTS3, regions$NUTS_ID), "N"] <- sums$V1
-
-    return(regions)
-}
-
-#' @noRd
-summary_pie <- function(data, count_var, group_var, title) {
-    stopifnot(
-        data.table::is.data.table(data),
-        count_var %in% colnames(data),
-        group_var %in% colnames(data),
-        is.character(title)
-    )
-
-    data <- data[, sum(get(count_var)), by = group_var]
-
-    plotly::plot_ly(
-        data = data,
-        labels = ~get(group_var),
-        values = ~V1,
-        type = "pie",
-        textinfo = "none"
-    ) |> plotly::layout(
-        title = list(text = title, font = list(size = 11)), showlegend = FALSE
+agg_x <- function(agg) {
+    switch(
+        agg,
+        "date" = "DateTransaction",
+        "month" = "yearmonth",
+        "year" = "year",
+        "NUTS3" = "NUTS3"
     )
 }

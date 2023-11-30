@@ -24,14 +24,3 @@ populate_selection <- function(session, select_id, choices) {
 filter_data <- function(data, selection) {
     if (is.null(selection)) data else data[data %in% selection]
 }
-
-#' @noRd
-agg_x <- function(agg) {
-    switch(
-        agg,
-        "date" = "DateTransaction",
-        "month" = "yearmonth",
-        "year" = "year",
-        "NUTS3" = "NUTS3"
-    )
-}
