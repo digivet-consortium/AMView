@@ -44,8 +44,7 @@ app_ui <- function() {
 
 #' app_server
 #'
-#' Manage the server (backend) side of the shiny app.
-#' @noRd
+#' Manage the server (backend) side of the Shiny app
 app_server <- function(input, output, session) {
     amu <- get_amu()
     countries <- get_spatial_data(unique(amu$Country))

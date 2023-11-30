@@ -25,10 +25,3 @@ Imports:
     shinycssloaders,
     shinyscreenshot,
     shinyWidgets
-Collate:
-    'AMView-package.R'
-    'app_ui.R'
-    'app_server.R'
-    'app.R'
-    'data.R'
-    'timeseries-ui.R'
