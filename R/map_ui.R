@@ -1,5 +1,5 @@
 #' @noRd
-map_ui <- function(id, species, groups, start_date, end_date) {
+map_ui <- function(id, animal_types, groups, start_date, end_date) {
     ns <- shiny::NS(id)
 
     shiny::tabPanel(
@@ -8,10 +8,10 @@ map_ui <- function(id, species, groups, start_date, end_date) {
                 shiny::wellPanel(
                     shiny::h3("Filter"),
                     shinyWidgets::pickerInput(
-                        inputId = ns("filter_species"),
+                        inputId = ns("filter_animal_types"),
                         label = "Animal types",
                         multiple = TRUE,
-                        choices = species,
+                        choices = animal_types,
                         options = shinyWidgets::pickerOptions(
                             actionsBox = TRUE
                         ),
@@ -106,7 +106,7 @@ map_ui <- function(id, species, groups, start_date, end_date) {
                     shiny::column(
                         shinycssloaders::withSpinner(
                             plotly::plotlyOutput(
-                                outputId = ns("pie_species"),
+                                outputId = ns("pie_animal_types"),
                                 height = "27vh", width = "95%"
                             )
                         ),

@@ -7,13 +7,13 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
         selected_area <- shiny::reactiveVal(NULL)
 
         shiny::observeEvent(
-            input$filter_species,
+            input$filter_animal_types,
             {
                 amu_data <- amu()
 
-                selected_species <- input$filter_species
-                if (is.null(selected_species))
-                    selected_species <- sort(unique(amu_data$AnimalType))
+                selected_animal_types <- input$filter_animal_types
+                if (is.null(selected_animal_types))
+                    selected_animal_types <- sort(unique(amu_data$AnimalType))
 
                 populate_selection(
                     id = id,
@@ -21,7 +21,7 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
                     select_id = "filter_gender",
                     choices = amu_data[
                         amu_data$AnimalType %in%
-                            selected_species, ]$Gender
+                            selected_animal_types, ]$Gender
                 )
 
                 populate_selection(
@@ -30,7 +30,7 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
                     select_id = "filter_age",
                     choices = amu_data[
                         amu_data$AnimalType %in%
-                            selected_species, ]$AgeCategory
+                            selected_animal_types, ]$AgeCategory
                 )
             },
             ignoreNULL = FALSE
@@ -75,7 +75,7 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
                 )
 
                 choice_names <- c(
-                    "None", "Animal type/species", choice_name,
+                    "None", "animalt type", choice_name,
                     "Diagnosis", "Medication group"
                 )
                 choice_values <- c(
@@ -108,7 +108,7 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
                 subgroup_2 <- # nolint
                 NULL # nolint
 
-            all_species <- amu_data$AnimalType
+            all_animal_types <- amu_data$AnimalType
             all_genders <- amu_data$Gender
             all_ages <- amu_data$AgeCategory
             daterange <- as.Date(input$slider)
@@ -117,7 +117,7 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
                 DateTransaction >= daterange[1] &
                     DateTransaction <= daterange[2] &
                     AnimalType %in% filter_data(
-                        all_species, input$filter_species) &
+                        all_animal_types, input$filter_animal_types) &
                     Gender %in% filter_data(
                         all_genders, input$filter_gender) &
                     AgeCategory %in% filter_data(all_ages, input$filter_age) &
