@@ -2,7 +2,8 @@
 % Please edit documentation in R/data.R
 \name{am_variables}
 \alias{am_variables}
-\title{The variables that go into the common data structure.}
+\title{A named list of the variables that go into the common data structure and
+their types.}
 \usage{
 am_variables(varnames = "all")
 }
@@ -14,6 +15,22 @@ a subset whose names corresponds to the values given.}
 a list as described above.
 }
 \description{
-The names of the list elements are the variable names, and the values are
-either the legal choices or an empty vector of the correct data type.
+The names of the list elements returned are the variable names defined in
+the common data structure, and the values can be one of three things:
+\itemize{
+\item Unnamed vector: represents the legal values that that variable can have;
+\item Empty vector of a given type: defines the legal type of that variable (
+but the actual value is not restricted);
+\item Named numeric vector with values between 0 and 1: the names represent the
+legal values and the numeric value represent the probability with which
+the values should appear when generating artificial data.
+}
+}
+\details{
+Note that the legal values given here are  tailored to be used for
+generating artificial data using the \code{amu_dummy_data} function, and to
+loosely mimic the Swedish cattle sector. The pool of legal values
+specified here is therefore not universal; see the file  under
+"inst/extdata/Content mapping AMU.xlsx" for the full specification of
+the common data structure.
 }

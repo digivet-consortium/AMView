@@ -2,12 +2,10 @@
 % Please edit documentation in R/data.R
 \name{amu_dummy_data}
 \alias{amu_dummy_data}
-\title{Generate some random AMU dummy data adhering to the common data structure.
-Limited to Sweden and cattle and. Diagnoses are fake (simply a random number)
-but ATC codes and medical product IDs are real and fetched from the
-"atc.csv" file in this package. The EntryID is merely an index of the row
-number. NOTE! This function takes quite some time to run for large values of
-\code{n_rows}.}
+\title{Generate some random artificial AMU data adhering to the variable rules
+defined by the function \code{am_variables}. ATC codes are fetched from the
+"atc.csv" file in this package, whose source is the Swedish Board
+of Agriculture. The EntryID is merely an index of the row number.}
 \usage{
 amu_dummy_data(n_rows, start_date, end_date)
 }
@@ -22,10 +20,6 @@ amu_dummy_data(n_rows, start_date, end_date)
 a data.frame with the dummy data
 }
 \description{
-Generate some random AMU dummy data adhering to the common data structure.
-Limited to Sweden and cattle and. Diagnoses are fake (simply a random number)
-but ATC codes and medical product IDs are real and fetched from the
-"atc.csv" file in this package. The EntryID is merely an index of the row
-number. NOTE! This function takes quite some time to run for large values of
+NOTE! This function takes quite some time to run for large values of
 \code{n_rows}.
 }
