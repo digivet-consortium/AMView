@@ -1,5 +1,5 @@
 #' @noRd
-aobut_ui <- function(id) {
+about_ui <- function(id) {
     ns <- shiny::NS(id)
 
     shiny::tabPanel(

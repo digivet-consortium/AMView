@@ -3,7 +3,7 @@
 #' @noRd
 trends_server <- function(id, amu, countries, atc, val_sub) {
     shiny::moduleServer(id, function(input, output, session) {
-        ns <- shiny::ns(id)
+        ns <- shiny::NS(id)
         selected_area <- shiny::reactiveVal(NULL)
 
         shiny::observeEvent(
@@ -16,16 +16,18 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
                     selected_species <- sort(unique(amu_data$AnimalType))
 
                 populate_selection(
+                    id = id,
                     session = session,
-                    select_id = ns("filter_gender"),
+                    select_id = "filter_gender",
                     choices = amu_data[
                         amu_data$AnimalType %in%
                             selected_species, ]$Gender
                 )
 
                 populate_selection(
+                    id = id,
                     session = session,
-                    select_id = ns("filter_age"),
+                    select_id = "filter_age",
                     choices = amu_data[
                         amu_data$AnimalType %in%
                             selected_species, ]$AgeCategory
@@ -48,8 +50,9 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
                         selected_groups, ]$subgroup_2
 
                 populate_selection(
+                    id = id,
                     session = session,
-                    select_id = ns("filter_medication_subgroup"),
+                    select_id = "filter_medication_subgroup",
                     choices = valid_subgroups
                 )
 
@@ -81,7 +84,7 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
 
                 shiny::updateRadioButtons(
                     session = session,
-                    inputId = ns("agg_group"),
+                    inputId = "agg_group",
                     choiceNames = choice_names,
                     choiceValues = choice_values,
                     selected = ifelse(

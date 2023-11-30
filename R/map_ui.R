@@ -1,5 +1,5 @@
 #' @noRd
-map_panel <- function(id, species, groups, start_date, end_date) {
+map_ui <- function(id, species, groups, start_date, end_date) {
     ns <- shiny::NS(id)
 
     shiny::tabPanel(

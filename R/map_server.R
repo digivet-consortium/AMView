@@ -5,6 +5,8 @@ map_server <- function(id, amu, countries) {
     shiny::moduleServer(id, function(input, output, session) {
         ns <- shiny::NS(id)
 
+        selected_area <- shiny::reactiveVal(NULL)
+
         shiny::observeEvent(
             input$filter_species,
             {
@@ -15,16 +17,18 @@ map_server <- function(id, amu, countries) {
                     selected_species <- sort(unique(amu_data$AnimalType))
 
                 populate_selection(
+                    id = id,
                     session = session,
-                    select_id = ns("filter_gender"),
+                    select_id = "filter_gender",
                     choices = amu_data[
                         amu_data$AnimalType %in%
                             selected_species, ]$Gender
                 )
 
                 populate_selection(
+                    id = id,
                     session = session,
-                    select_id = ns("filter_age"),
+                    select_id = "filter_age",
                     choices = amu_data[
                         amu_data$AnimalType %in%
                             selected_species, ]$AgeCategory

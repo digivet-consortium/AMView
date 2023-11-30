@@ -12,7 +12,7 @@ help_popup <- function(title, content) {
 }
 
 #' @noRd
-populate_selection <- function(session, select_id, choices) {
+populate_selection <- function(id, session, select_id, choices) {
     shinyWidgets::updatePickerInput(
         session = session,
         inputId = select_id,

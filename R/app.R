@@ -55,7 +55,7 @@ app_server <- function(input, output, session) {
     val_sub <- shiny::reactiveVal(sort(unique(atc$subgroup_2)))
     atc <- shiny::reactiveVal(atc)
 
-    map_server("map", amu, countries, atc, val_sub)
+    map_server("map", amu, countries)
     trends_server("trends", amu, countries, atc, val_sub)
     about_server("about")
 }
