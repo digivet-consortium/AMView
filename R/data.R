@@ -27,24 +27,38 @@ get_amu <- function() {
     )
     atc <- get_atc()
 
-    dt <- data.table::merge.data.table(
+    data.table::merge.data.table(
         dt,
         atc,
         by.x = "ATCcode",
         by.y = "atc_code",
         all.x = TRUE
     )
-
-    dt
 }
 
-#' The variables that go into the common data structure.
+#' A named list of the variables that go into the common data structure and
+#' their types.
 #'
-#' The names of the list elements are the variable names, and the values are
-#' either the legal choices or an empty vector of the correct data type.
+#' The names of the list elements returned are the variable names defined in
+#' the common data structure, and the values can be one of three things:
+#' * Unnamed vector: represents the legal values that that variable can have;
+#' * Empty vector of a given type: defines the legal type of that variable (
+#'   but the actual value is not restricted);
+#' * Named numeric vector with values between 0 and 1: the names represent the
+#'   legal values and the numeric value represent the probability with which
+#'   the values should appear when generating artificial data.
+#'
+#' Note that the legal values given here are  tailored to be used for
+#' generating artificial data using the \code{amu_dummy_data} function, and to
+#' loosely mimic the Swedish cattle sector. The pool of legal values
+#' specified here is therefore not universal; see the file  under
+#' "inst/extdata/Content mapping AMU.xlsx" for the full specification of
+#' the common data structure.
+#'
 #' @param varnames if "all" (default), returns all values. Otherwise returns
 #' a subset whose names corresponds to the values given.
 #' @return a list as described above.
+#' @export
 am_variables <- function(varnames = "all") {
     vars <- list(
         EntryID = integer(),
@@ -129,38 +143,46 @@ am_variables <- function(varnames = "all") {
     vars[[varnames]]
 }
 
-#' Generate some random AMU dummy data adhering to the common data structure.
-#' Limited to Sweden and cattle and. Diagnoses are fake (simply a random number)
-#' but ATC codes and medical product IDs are real and fetched from the
-#' "atc.csv" file in this package. The EntryID is merely an index of the row
-#' number. NOTE! This function takes quite some time to run for large values of
+#' Generate some random artificial AMU data adhering to the variable rules
+#' defined by the function \code{am_variables}. ATC codes are fetched from the
+#' "atc.csv" file in this package, whose source is the Swedish Board
+#' of Agriculture. The EntryID is merely an index of the row number.
+#'
+#' NOTE! This function takes quite some time to run for large values of
 #' \code{n_rows}.
+#'
 #' @param n_rows the number of rows in the dataset
 #' @param start_date The earliest possible date of transaction
 #' @param end_date The latest possible date of transaction.
 #' @return a data.frame with the dummy data
 #' @export
 amu_dummy_data <- function(n_rows, start_date, end_date) {
-    use_proportions <- data.table::fread(
-        system.file("extdata/use_proportions.csv", package = "AMView"),
-        dec = ","
-    )
 
-    subgroups <- unique(use_proportions$medication)
-
-    atc_code <- NULL #nolint
-    atc <- get_atc(include_product = TRUE)[
-        sapply(atc_code, function(x) any(startsWith(x, subgroups)))
-    ]
-
+    # Make sure the input variables are correctly formatted
     start_date <- as.Date(start_date)
     end_date <- as.Date(end_date)
     stopifnot(is.numeric(n_rows), n_rows >= 1, n_rows %% 1 == 0)
     stopifnot(end_date > start_date)
 
+    # Load CSV file with statistics for how much antimicrobials have been used
+    # expressed as absolute numbers and proportions per medication and year.
+    # Based on official Swedish AMU statistics.
+    use_proportions <- data.table::fread(
+        system.file("extdata/use_proportions.csv", package = "AMView"),
+        dec = ","
+    )
+
+    # nolint start
+
+    # Load medication ATC code dataset, but only keep those that exist within
+    # the use proportions data.
+    subgroups <- unique(use_proportions$medication)
+    atc <- get_atc(include_product = TRUE)[
+        sapply(atc_code, function(x) any(startsWith(x, subgroups)))
+    ]
+
     vars <- am_variables()
 
-    #nolint start
     EntryID  <- seq_len(n_rows)
     TypeOfEntry <- sample(vars$TypeOfEntry, n_rows, TRUE)
     IncludeAsUse <- rep(vars$IncludeAsUse, n_rows)
@@ -296,7 +318,13 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
     data[data$ActiveSubstanceKg > 0, ]
 }
 
-#' @noRd
+
+#' Extract spatial data for a given list of European countries
+#' @param country_codes official NUTS country codes for the countries to
+#'        retrieve data from.
+#' @return an \code{sf} object with the desired geospatial data.
+#'
+#' @export
 get_spatial_data <- function(country_codes) {
     countries <- eurostat::get_eurostat_geospatial(
         output_class = "sf",
