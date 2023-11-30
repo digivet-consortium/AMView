@@ -1,49 +1,14 @@
-#' app_ui
-#'
-#' Configure the UI (frontend) side of the Shiny app
 #' @noRd
-app_ui <- function() {
-    options("spinner.type" = 5)
-    options("spinner.color" = "#2C3E50")
+map_panel <- function(id, species, groups, start_date, end_date) {
+    ns <- shiny::NS(id)
 
-    amu <- get_amu()
-    start_date <- min(amu$DateTransaction, na.rm = TRUE)
-    end_date <- max(amu$DateTransaction, na.rm = TRUE)
-    species <- sort(unique(amu$AnimalType))
-    atc <- get_atc()
-    groups <- sort(unique(atc$subgroup_1))
-
-    # Dashboard UI setup
-    shiny::navbarPage(
-        timeseries_panel(species, groups, start_date, end_date),
-        map_panel(species, groups, start_date, end_date),
-        about_panel(),
-
-        theme = bslib::bs_theme(bootswatch = "flatly"),
-        title = "AMView - Visualize AMU"
-    )
-}
-
-#' @noRd
-timeseries_panel <- function(species, groups, start_date, end_date) {
-    shiny::tabPanel(
-        shiny::tagList(
-            timeseries_output(start_date, end_date),
-            timeseries_filters(species, groups)
-        ),
-        title = "Trends"
-    )
-}
-
-#' @noRd
-map_panel <- function(species, groups, start_date, end_date) {
     shiny::tabPanel(
         shiny::fluidRow(
             shiny::column(
                 shiny::wellPanel(
                     shiny::h3("Filter"),
                     shinyWidgets::pickerInput(
-                        inputId = "map_filter_species",
+                        inputId = ns("filter_species"),
                         label = "Animal types",
                         multiple = TRUE,
                         choices = species,
@@ -53,7 +18,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                         inline = FALSE
                     ),
                     shinyWidgets::pickerInput(
-                        inputId = "map_filter_gender",
+                        inputId = ns("filter_gender"),
                         label = "Genders",
                         multiple = TRUE,
                         choices = NULL,
@@ -63,7 +28,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                         inline = FALSE
                     ),
                     shinyWidgets::pickerInput(
-                        inputId = "map_filter_age",
+                        inputId = ns("filter_age"),
                         label = "Age categories",
                         multiple = TRUE,
                         choices = NULL,
@@ -73,7 +38,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                         inline = FALSE
                     ),
                     shinyWidgets::pickerInput(
-                        inputId = "map_filter_medication",
+                        inputId = ns("filter_medication"),
                         label = "Medication groups",
                         multiple = TRUE,
                         choices = groups,
@@ -85,19 +50,19 @@ map_panel <- function(species, groups, start_date, end_date) {
                     shiny::br(),
                     shinyscreenshot::screenshotButton(
                         filename = "AMView_map",
-                        id = "map",
+                        id = ns("map"),
                         icon = shiny::icon("image"),
                         label = " Save map as PNG"
                     ),
                     shiny::br(), shiny::br(),
                     shiny::downloadButton(
-                        outputId = "download_map",
+                        outputId = ns("download"),
                         label = " Download current map data",
                         icon = shiny::icon("file-csv")
                     ),
                     shiny::br(), shiny::br(),
                     shiny::actionButton(
-                        inputId = "help_map",
+                        inputId = ns("help"),
                         label = "About this page",
                         icon = shiny::icon("circle-info")
                     )
@@ -107,14 +72,14 @@ map_panel <- function(species, groups, start_date, end_date) {
             shiny::column(
                 shinycssloaders::withSpinner(
                     leaflet::leafletOutput(
-                        outputId = "map", height = "75vh"
+                        outputId = ns("map"), height = "75vh"
                     ), hide.ui = FALSE
                 ),
                 shiny::br(),
                 shiny::fluidRow(
                     shiny::column(
                         shiny::sliderInput(
-                            inputId = "map_slider",
+                            inputId = ns("slider"),
                             label = NULL,
                             min = start_date,
                             max = end_date,
@@ -129,7 +94,7 @@ map_panel <- function(species, groups, start_date, end_date) {
             shiny::column(
                 shiny::fluidRow(
                     shiny::column(
-                        shiny::uiOutput(outputId = "selected_region"),
+                        shiny::uiOutput(outputId = ns("selected_region")),
                         shiny::p(
                             "Hover the pie charts for detailed information.",
                             style = "font-size:11px"
@@ -141,7 +106,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                     shiny::column(
                         shinycssloaders::withSpinner(
                             plotly::plotlyOutput(
-                                outputId = "pie_species",
+                                outputId = ns("pie_species"),
                                 height = "27vh", width = "95%"
                             )
                         ),
@@ -152,7 +117,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                     shiny::column(
                         shinycssloaders::withSpinner(
                             plotly::plotlyOutput(
-                                outputId = "pie_diagnosis",
+                                outputId = ns("pie_diagnosis"),
                                 height = "27vh", width = "95%"
                             )
                         ),
@@ -163,7 +128,7 @@ map_panel <- function(species, groups, start_date, end_date) {
                     shiny::column(
                         shinycssloaders::withSpinner(
                             plotly::plotlyOutput(
-                                outputId = "pie_medication",
+                                outputId = ns("pie_medication"),
                                 height = "27vh", width = "95%"
                             )
                         ),
@@ -174,29 +139,5 @@ map_panel <- function(species, groups, start_date, end_date) {
             )
         ),
         title = "Map"
-    )
-}
-
-#' @noRd
-about_panel <- function() {
-    shiny::tabPanel(
-        shiny::fluidRow(
-            shiny::column(
-                shiny::includeMarkdown(
-                    path_to_markdown("about.md")
-                ),
-                width = 8, offset = 2
-            )
-        ),
-        shiny::fluidRow(
-            shiny::column(
-                shiny::downloadButton(
-                    outputId = "download_data_structure",
-                    label = " Common data structure: download template"
-                ),
-                width = 3, offset = 2
-            )
-        ),
-        title = "About"
     )
 }

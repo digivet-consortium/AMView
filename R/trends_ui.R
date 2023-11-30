@@ -1,12 +1,23 @@
 #' @noRd
-timeseries_filters <- function(species, groups) {
+trends_ui <- function(id, species, groups, start_date, end_date) {
+    ns <- shiny::NS(id)
+
+    shiny::tabPanel(
+        trends_output(ns, start_date, end_date),
+        trends_filters(ns, species, groups),
+        title = "Trends"
+    )
+}
+
+#' @noRd
+trends_filters <- function(ns, species, groups) {
     shiny::wellPanel(
         shiny::fluidRow(
             shiny::column(
                 shiny::fluidRow(
                     shiny::column(
                         shiny::actionButton(
-                            inputId = "help_timeseries",
+                            inputId = ns("help"),
                             label = "About this page",
                             icon = shiny::icon("circle-info")
                         ),
@@ -15,7 +26,7 @@ timeseries_filters <- function(species, groups) {
                     shiny::column(
                         shinyscreenshot::screenshotButton(
                             filename = "AMView_trendplot",
-                            id = "plot",
+                            id = ns("plot"),
                             icon = shiny::icon("image"),
                             label = " Save plot as PNG"
                         ),
@@ -23,7 +34,7 @@ timeseries_filters <- function(species, groups) {
                     ),
                     shiny::column(
                         shiny::downloadButton(
-                            outputId = "download_timeseries",
+                            outputId = ns("download"),
                             label = " Download current data selection",
                             icon = shiny::icon("file-csv")
                         ),
@@ -36,7 +47,7 @@ timeseries_filters <- function(species, groups) {
                     shiny::column(
                         shiny::h5("X axis unit"),
                         shiny::radioButtons(
-                            inputId = "agg_x",
+                            inputId = ns("agg_x"),
                             label = NULL,
                             choiceNames = c(
                                 "Year", "Month", "Date", "Region (NUTS3)"
@@ -49,7 +60,7 @@ timeseries_filters <- function(species, groups) {
                     shiny::column(
                         shiny::h5("Group by"),
                         shiny::radioButtons(
-                            inputId = "agg_group",
+                            inputId = ns("agg_group"),
                             label = NULL,
                             choiceNames = c(
                                 "None",
@@ -73,7 +84,7 @@ timeseries_filters <- function(species, groups) {
                 shiny::p(
                     shiny::h3("Filter"),
                     shinyWidgets::pickerInput(
-                        inputId = "filter_species",
+                        inputId = ns("filter_species"),
                         label = "Animal types",
                         multiple = TRUE,
                         choices = species,
@@ -83,7 +94,7 @@ timeseries_filters <- function(species, groups) {
                         inline = TRUE
                     ),
                     shinyWidgets::pickerInput(
-                        inputId = "filter_gender",
+                        inputId = ns("filter_gender"),
                         label = "Genders",
                         multiple = TRUE,
                         choices = NULL,
@@ -93,7 +104,7 @@ timeseries_filters <- function(species, groups) {
                         inline = TRUE
                     ),
                     shinyWidgets::pickerInput(
-                        inputId = "filter_age",
+                        inputId = ns("filter_age"),
                         label = "Age categories",
                         multiple = TRUE,
                         choices = NULL,
@@ -105,7 +116,7 @@ timeseries_filters <- function(species, groups) {
                 ),
                 shiny::p(
                     shinyWidgets::pickerInput(
-                        inputId = "filter_medication_group",
+                        inputId = ns("filter_medication_group"),
                         label = "Medication groups",
                         multiple = TRUE,
                         choices = groups,
@@ -115,7 +126,7 @@ timeseries_filters <- function(species, groups) {
                         inline = FALSE
                     ),
                     shinyWidgets::pickerInput(
-                        inputId = "filter_medication_subgroup",
+                        inputId = ns("filter_medication_subgroup"),
                         label = "Medication subgroups",
                         multiple = TRUE,
                         choices = NULL,
@@ -131,13 +142,15 @@ timeseries_filters <- function(species, groups) {
     )
 }
 
-timeseries_output <- function(start_date, end_date) {
+#'
+#' @noRd
+trends_output <- function(ns, start_date, end_date) {
     shiny::tagList(
         shiny::fluidRow(
             shiny::column(
                 shinycssloaders::withSpinner(
                     plotly::plotlyOutput(
-                        outputId = "plot", height = "43vh"
+                        outputId = ns("plot"), height = "43vh"
                     ), hide.ui = FALSE
                 ),
                 width = 12
@@ -146,7 +159,7 @@ timeseries_output <- function(start_date, end_date) {
         shiny::fluidRow(
             shiny::column(
                 shiny::sliderInput(
-                    inputId = "timeseries_slider",
+                    inputId = ns("slider"),
                     label = NULL,
                     min = start_date,
                     max = end_date,
@@ -157,7 +170,7 @@ timeseries_output <- function(start_date, end_date) {
             ),
             shiny::column(
                 shiny::selectInput(
-                    inputId = "chart_type",
+                    inputId = ns("chart_type"),
                     label = "Chart type",
                     choices = list(
                         "Bar" = "bar",
