@@ -33,8 +33,8 @@ app_ui <- function() {
 
     # Dashboard UI setup
     shiny::navbarPage(
-        trends_ui("trends", species, groups, start_date, end_date),
         map_ui("map", species, groups, start_date, end_date),
+        trends_ui("trends", species, groups, start_date, end_date),
         about_ui("about"),
 
         theme = bslib::bs_theme(bootswatch = "flatly"),
