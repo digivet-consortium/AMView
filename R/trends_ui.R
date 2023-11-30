@@ -53,7 +53,9 @@ trends_filters <- function(ns, species, groups) {
                                 "Year", "Month", "Date", "Region (NUTS3)"
                             ),
                             choiceValues = c("year", "month", "date", "NUTS3"),
-                            selected = "month",
+                            selected = sample(
+                                c("year", "month", "date"), 1
+                            ),
                         ),
                         width = 6
                     ),
@@ -73,7 +75,9 @@ trends_filters <- function(ns, species, groups) {
                                 "", "AnimalType", "NUTS3",
                                 "Diagnosis", "subgroup_1"
                             ),
-                            selected = ""
+                            selected = sample(c(
+                                "AnimalType", "Diagnosis", "subgroup_1"
+                            ), 1)
                         ),
                         width = 6
                     )
