@@ -28,13 +28,16 @@ app_ui <- function() {
     start_date <- min(amu$DateTransaction, na.rm = TRUE)
     end_date <- max(amu$DateTransaction, na.rm = TRUE)
     animal_types <- sort(unique(amu$AnimalType))
+    species <- sort(unique(amu$AnimalSpecies))
     atc <- get_atc()
     groups <- sort(unique(atc$subgroup_1))
 
     # Dashboard UI setup
     shiny::navbarPage(
-        map_ui("map", animal_types, groups, start_date, end_date),
-        trends_ui("trends", animal_types, groups, start_date, end_date),
+        map_ui("map", species, animal_types, groups, start_date, end_date),
+        trends_ui(
+            "trends", species, animal_types, groups, start_date, end_date
+        ),
         about_ui("about"),
 
         theme = bslib::bs_theme(bootswatch = "flatly"),

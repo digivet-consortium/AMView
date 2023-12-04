@@ -8,21 +8,30 @@ map_server <- function(id, amu, countries) {
         selected_area <- shiny::reactiveVal(NULL)
 
         shiny::observeEvent(
-            input$filter_animal_types,
+            input$filter_species,
             {
                 amu_data <- amu()
 
-                selected_animal_types <- input$filter_animal_types
-                if (is.null(selected_animal_types))
-                    selected_animal_types <- sort(unique(amu_data$AnimalType))
+                selected_species <- input$filter_species
+                if (is.null(selected_species))
+                    selected_species <- sort(unique(amu_data$AnimalSpecies))
+
+                populate_selection(
+                    id = id,
+                    session = session,
+                    select_id = "filter_animal_types",
+                    choices = amu_data[
+                        amu_data$AnimalSpecies %in%
+                            selected_species, ]$AnimalType
+                )
 
                 populate_selection(
                     id = id,
                     session = session,
                     select_id = "filter_gender",
                     choices = amu_data[
-                        amu_data$AnimalType %in%
-                            selected_animal_types, ]$Gender
+                        amu_data$AnimalSpecies %in%
+                            selected_species, ]$Gender
                 )
 
                 populate_selection(
@@ -30,8 +39,8 @@ map_server <- function(id, amu, countries) {
                     session = session,
                     select_id = "filter_age",
                     choices = amu_data[
-                        amu_data$AnimalType %in%
-                            selected_animal_types, ]$AgeCategory
+                        amu_data$AnimalSpecies %in%
+                            selected_species, ]$AgeCategory
                 )
             },
             ignoreNULL = FALSE
@@ -43,6 +52,7 @@ map_server <- function(id, amu, countries) {
                 amu_data = amu(),
                 regions = countries(),
                 daterange = as.Date(input$slider),
+                filter_species = input$fitler_species,
                 filter_animal_types = input$filter_animal_types,
                 filter_gender = input$filter_gender,
                 filter_age = input$filter_age,
@@ -57,6 +67,7 @@ map_server <- function(id, amu, countries) {
                 amu_data = amu(),
                 regions = countries(),
                 daterange = as.Date(input$slider),
+                filter_species = input$fitler_species,
                 filter_animal_types = input$filter_animal_types,
                 filter_gender = input$filter_gender,
                 filter_age = input$filter_age,
@@ -218,23 +229,26 @@ create_map_data <- function(
     amu_data,
     regions,
     daterange,
+    filter_species,
     filter_animal_types,
     filter_gender,
     filter_age,
     filter_medication,
     geo_group = TRUE
 ) {
+    all_species <- amu_data$AnimalSpecies
     all_animal_types <- amu_data$AnimalType
     all_genders <- amu_data$Gender
     all_ages <- amu_data$AgeCategory
     all_groups <- amu_data$subgroup_1
 
-    DateTransaction <- AnimalType <- Gender <- #nolint
+    DateTransaction <- AnimalSpecies <- AnimalType <- Gender <- #nolint
     AgeCategory <- subgroup_1 <- ActiveSubstanceKg <- NULL #nolint
 
     dt <- amu_data[
         DateTransaction >= daterange[1] &
             DateTransaction <= daterange[2] &
+            AnimalSpecies %in% filter_data(all_species, filter_species) &
             AnimalType %in% filter_data(
                 all_animal_types, filter_animal_types
             ) &
@@ -258,7 +272,7 @@ create_map_data <- function(
 
     regions[match(sums$NUTS3, regions$NUTS_ID), "N"] <- sums$V1
 
-    return(regions)
+    regions
 }
 
 #' @noRd

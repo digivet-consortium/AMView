@@ -3,25 +3,33 @@
 #' @noRd
 trends_server <- function(id, amu, countries, atc, val_sub) {
     shiny::moduleServer(id, function(input, output, session) {
-        ns <- shiny::NS(id)
         selected_area <- shiny::reactiveVal(NULL)
 
         shiny::observeEvent(
-            input$filter_animal_types,
+            input$filter_species,
             {
                 amu_data <- amu()
 
-                selected_animal_types <- input$filter_animal_types
-                if (is.null(selected_animal_types))
-                    selected_animal_types <- sort(unique(amu_data$AnimalType))
+                selected_species <- input$filter_species
+                if (is.null(selected_species))
+                    selected_species <- sort(unique(amu_data$AnimalSpecies))
+
+                populate_selection(
+                    id = id,
+                    session = session,
+                    select_id = "filter_animal_types",
+                    choices = amu_data[
+                        amu_data$AnimalSpecies %in%
+                            selected_species, ]$AnimalType
+                )
 
                 populate_selection(
                     id = id,
                     session = session,
                     select_id = "filter_gender",
                     choices = amu_data[
-                        amu_data$AnimalType %in%
-                            selected_animal_types, ]$Gender
+                        amu_data$AnimalSpecies %in%
+                            selected_species, ]$Gender
                 )
 
                 populate_selection(
@@ -29,8 +37,8 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
                     session = session,
                     select_id = "filter_age",
                     choices = amu_data[
-                        amu_data$AnimalType %in%
-                            selected_animal_types, ]$AgeCategory
+                        amu_data$AnimalSpecies %in%
+                            selected_species, ]$AgeCategory
                 )
             },
             ignoreNULL = FALSE
@@ -108,6 +116,7 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
                 subgroup_2 <- # nolint
                 NULL # nolint
 
+            all_species <- amu_data$AnimalSpecies
             all_animal_types <- amu_data$AnimalType
             all_genders <- amu_data$Gender
             all_ages <- amu_data$AgeCategory
@@ -116,6 +125,9 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
             amu_data <- amu_data[
                 DateTransaction >= daterange[1] &
                     DateTransaction <= daterange[2] &
+                    AnimalSpecies %in% filter_data(
+                        all_species, input$filter_species
+                    ) &
                     AnimalType %in% filter_data(
                         all_animal_types, input$filter_animal_types) &
                     Gender %in% filter_data(
