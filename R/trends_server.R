@@ -140,8 +140,9 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
 
             data.table::set(
                 amu_data,
-                j = c("month", "year"),
+                j = c("yearweek", "month", "year"),
                 value = list(
+                    yearweek(amu_data$DateTransaction),
                     factor(
                         format(amu_data$DateTransaction, "%B"),
                         levels = month.name
@@ -150,7 +151,8 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
                 )
             )
 
-            year <- month <- yearmonth <- ActiveSubstanceKg <- NULL # nolint
+            year <- month <- yearmonth <- yearweek <-
+                ActiveSubstanceKg <- NULL # nolint
 
             years <- levels(amu_data$year)
             months <- levels(amu_data$month)
@@ -226,7 +228,7 @@ trends_server <- function(id, amu, countries, atc, val_sub) {
 
             p |>
                 plotly::layout(
-                    xaxis = list(title = x),
+                    xaxis = list(title = plot_title(x)),
                     yaxis = list(title = "Substance consumed (kg)"),
                     legend = list(title = list(text = input$agg_group))
                 )
@@ -255,8 +257,34 @@ agg_x <- function(agg) {
     switch(
         agg,
         "date" = "DateTransaction",
+        "yearweek" = "yearweek",
         "month" = "yearmonth",
         "year" = "year",
         "NUTS3" = "NUTS3"
     )
+}
+
+#' @noRd
+plot_title <- function(x) {
+    stopifnot(is.character(x))
+
+    if (x == "NUTS3")
+        return("Region (NUTS3)")
+
+    paste(switch(
+        x,
+        "year" = "Year",
+        "yearmonth" = "Month",
+        "yearweek" = "Week",
+        "DateTransaction" = "Date"
+    ), "of transaction")
+}
+
+#' @noRd
+yearweek <- function(d) {
+    stopifnot(inherits(d, "Date"))
+
+    d <- as.Date(cut(d, "week"))
+
+    strftime(d, "%Y-%V")
 }

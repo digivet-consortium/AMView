@@ -50,11 +50,14 @@ trends_filters <- function(ns, species, animal_types, groups) {
                             inputId = ns("agg_x"),
                             label = NULL,
                             choiceNames = c(
-                                "Year", "Month", "Date", "Region (NUTS3)"
+                                "Year", "Month", "Week",
+                                "Date", "Region (NUTS3)"
                             ),
-                            choiceValues = c("year", "month", "date", "NUTS3"),
+                            choiceValues = c(
+                                "year", "month", "yearweek", "date", "NUTS3"
+                            ),
                             selected = sample(
-                                c("year", "month", "date"), 1
+                                c("year", "month", "yearweek", "date"), 1
                             ),
                         ),
                         width = 6
