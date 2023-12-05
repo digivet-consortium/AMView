@@ -1,16 +1,16 @@
 #' @noRd
-trends_ui <- function(id, animal_types, groups, start_date, end_date) {
+trends_ui <- function(id, species, animal_types, groups, start_date, end_date) {
     ns <- shiny::NS(id)
 
     shiny::tabPanel(
         trends_output(ns, start_date, end_date),
-        trends_filters(ns, animal_types, groups),
+        trends_filters(ns, species, animal_types, groups),
         title = "Trends"
     )
 }
 
 #' @noRd
-trends_filters <- function(ns, animal_types, groups) {
+trends_filters <- function(ns, species, animal_types, groups) {
     shiny::wellPanel(
         shiny::fluidRow(
             shiny::column(
@@ -82,11 +82,21 @@ trends_filters <- function(ns, animal_types, groups) {
                         width = 6
                     )
                 ),
-                width = 6
+                width = 5
             ),
             shiny::column(
                 shiny::p(
                     shiny::h3("Filter"),
+                    shinyWidgets::pickerInput(
+                        inputId = ns("filter_species"),
+                        label = "Animal species",
+                        multiple = TRUE,
+                        choices = species,
+                        options = shinyWidgets::pickerOptions(
+                            actionsBox = TRUE
+                        ),
+                        inline = TRUE
+                    ),
                     shinyWidgets::pickerInput(
                         inputId = ns("filter_animal_types"),
                         label = "Animal types",
@@ -127,7 +137,7 @@ trends_filters <- function(ns, animal_types, groups) {
                         options = shinyWidgets::pickerOptions(
                             actionsBox = TRUE
                         ),
-                        inline = FALSE
+                        inline = TRUE
                     ),
                     shinyWidgets::pickerInput(
                         inputId = ns("filter_medication_subgroup"),
@@ -137,10 +147,10 @@ trends_filters <- function(ns, animal_types, groups) {
                         options = shinyWidgets::pickerOptions(
                             actionsBox = TRUE
                         ),
-                        inline = FALSE
+                        inline = TRUE
                     )
                 ),
-                width = 6
+                width = 7
             )
         )
     )

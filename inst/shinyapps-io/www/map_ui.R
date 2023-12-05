@@ -1,5 +1,5 @@
 #' @noRd
-map_ui <- function(id, animal_types, groups, start_date, end_date) {
+map_ui <- function(id, species, animal_types, groups, start_date, end_date) {
     ns <- shiny::NS(id)
 
     shiny::tabPanel(
@@ -7,6 +7,16 @@ map_ui <- function(id, animal_types, groups, start_date, end_date) {
             shiny::column(
                 shiny::wellPanel(
                     shiny::h3("Filter"),
+                    shinyWidgets::pickerInput(
+                        inputId = ns("filter_species"),
+                        label = "Animal species",
+                        multiple = TRUE,
+                        choices = species,
+                        options = shinyWidgets::pickerOptions(
+                            actionsBox = TRUE
+                        ),
+                        inline = TRUE
+                    ),
                     shinyWidgets::pickerInput(
                         inputId = ns("filter_animal_types"),
                         label = "Animal types",
