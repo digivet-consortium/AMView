@@ -105,7 +105,7 @@ map_server <- function(id, amu, countries) {
             }
         }, ignoreNULL = FALSE)
 
-        shiny::observeEvent(input$help_map, {
+        shiny::observeEvent(input$help, {
             help_popup(
                 title = "Page guide",
                 content = shiny::includeMarkdown(
