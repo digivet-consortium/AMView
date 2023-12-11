@@ -32,6 +32,7 @@ Currently, AMView only supports reading data which is "baked into" the R package
 1. Clone this repository. Or, if you want to save your modifications, create a fork of this repo and clone that fork.
 
 2. In your local copy, replace the CSV file under `inst/extdata/amu.csv` with one that contains the data you want to visualize. Follow the specification in `inst/extdata/Content mapping AMU.xlsx` to make sure the columns of the CSV are named and formatted correctly.
+    * Note that while the original CSV is semicolon-separated, the replacement can have any delimited text format that is guessable by the `data.table` R package as long as the file has the name `amu.csv`.
 
 3. Install the package. The easiest way is to open R in the root of the local repo, and write the following:
 
