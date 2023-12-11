@@ -52,7 +52,7 @@ get_amu <- function() {
 #' generating artificial data using the \code{amu_dummy_data} function, and to
 #' loosely mimic the Swedish cattle sector. The pool of legal values
 #' specified here is therefore not universal; see the file  under
-#' "inst/extdata/Content mapping AMU.xlsx" for the full specification of
+#' \code{inst/extdata/Content mapping AMU.xlsx} for the full specification of
 #' the common data structure.
 #'
 #' @param varnames if "all" (default), returns all values. Otherwise returns
