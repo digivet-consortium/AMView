@@ -2,7 +2,7 @@
 
 This dashboard is an RShiny application, developed as an R package, that visualizes antimicrobial use (AMU) data in animals. The application
 was developed as part of the [DigiVet](http://www.dcs.gla.ac.uk/~jenright/digivet_website/) project.
-The source code as found at <https://github.com/SVA-SE/AMView> will see continued development after the project is condluded; a static project deliverable version of the application is archived at [Zenodo](https://zenodo.org/communities/digivet?q=&l=list&p=1&s=10&sort=newest).
+The source code as found at <https://github.com/SVA-SE/AMView> will see continued development after the project is concluded; a static project deliverable version of the application is archived at [Zenodo](https://zenodo.org/communities/digivet?q=&l=list&p=1&s=10&sort=newest).
 
  The package also has functionality to randomly generate artificial to use for app showcasing. The parameters for the data generation are currently set so that the generated data will loosely imitate official AMU statistics from the Swedish cattle sector. The data format follows a common AMU data structure which has been developed within the DigiVet project. An instruction and template for the common data structure can be downloaded within the application, or viewed in this repository under `inst/extdata/Content mapping AMU.xlsx`.
 
