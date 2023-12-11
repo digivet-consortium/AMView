@@ -1,5 +1,3 @@
-## How to navigate this page
-
 This page has one output: the trends graph. This can be controlled by various
 inputs, here listed top to bottom, left to right:
 

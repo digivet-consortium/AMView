@@ -1,5 +1,3 @@
-## How to navigate this page
-
 The outputs of this page (the map and the pie charts) can be controlled by
 the user through various filters. These filters consist of several different
 dropdown menus, as well as a timeline slider below the map view. The default
