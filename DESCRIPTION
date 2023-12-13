@@ -18,11 +18,13 @@ Imports:
     eurostat,
     htmltools,
     leaflet,
-    markdown,
     plotly,
-    RColorBrewer,
-    sf,
     shiny,
     shinycssloaders,
     shinyscreenshot,
-    shinyWidgets
+    shinyWidgets,
+    stats,
+    utils
+Suggests:
+    markdown,
+    sf

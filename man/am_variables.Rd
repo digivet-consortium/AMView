@@ -31,6 +31,6 @@ Note that the legal values given here are  tailored to be used for
 generating artificial data using the \code{amu_dummy_data} function, and to
 loosely mimic the Swedish cattle sector. The pool of legal values
 specified here is therefore not universal; see the file  under
-\code{inst/extdata/Content mapping AMU.xlsx} for the full specification of
+\code{inst/extdata/content_mapping_AMU.xlsx} for the full specification of
 the common data structure.
 }
