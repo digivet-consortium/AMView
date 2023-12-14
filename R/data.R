@@ -1,6 +1,6 @@
 #' @noRd
 path_to_data_structure <- function() {
-    system.file("extdata/Content mapping AMU.xlsx", package = "AMView")
+    system.file("extdata/content_mapping_AMU.xlsx", package = "AMView")
 }
 
 #' @noRd
@@ -52,7 +52,7 @@ get_amu <- function() {
 #' generating artificial data using the \code{amu_dummy_data} function, and to
 #' loosely mimic the Swedish cattle sector. The pool of legal values
 #' specified here is therefore not universal; see the file  under
-#' \code{inst/extdata/Content mapping AMU.xlsx} for the full specification of
+#' \code{inst/extdata/content_mapping_AMU.xlsx} for the full specification of
 #' the common data structure.
 #'
 #' @param varnames if "all" (default), returns all values. Otherwise returns
@@ -175,6 +175,8 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
 
     # nolint start
 
+    atc_code <- NULL
+
     # Load medication ATC code dataset, but only keep those that exist within
     # the use proportions data.
     subgroups <- unique(use_proportions$medication)
@@ -274,7 +276,7 @@ amu_dummy_data <- function(n_rows, start_date, end_date) {
             if (m == 0)
                 return(rep(0, n))
 
-            b <- runif(n, 0, m)
+            b <- stats::runif(n, 0, m)
 
             b / sum(b) * m
         }, counts, substance, SIMPLIFY = TRUE))

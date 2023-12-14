@@ -1,7 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
-Dockerfile
+^Dockerfile$
 Makefile
 ^README.md$
 ^.*\.yml$
+^\.lintr$
+^\.vscode$
+inst/shinyapps-io

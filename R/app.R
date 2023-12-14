@@ -20,6 +20,8 @@ run_app <- function(...) {
 #' app_ui
 #'
 #' Configure the UI (frontend) side of the Shiny app
+#'
+#' @noRd
 app_ui <- function() {
     options("spinner.type" = 5)
     options("spinner.color" = "#2C3E50")
@@ -48,6 +50,8 @@ app_ui <- function() {
 #' app_server
 #'
 #' Manage the server (backend) side of the Shiny app
+#'
+#' @noRd
 app_server <- function(input, output, session) {
     amu <- get_amu()
     countries <- get_spatial_data(unique(amu$Country))
