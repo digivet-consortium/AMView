@@ -1,0 +1,78 @@
+LegemiddelformKort.DN;Legemiddelform.VI;Legemiddelform.VI_NORM-VET;Legemiddelform.ESVAC;Enhetstype;Kommentarer;Kommentarer II
+Depottablett;Tablett;Tablett;TABL;stk;;
+Depotøyedråper;Øyepreparat;Øyepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS01AA/S01AA med antibiotika;
+Depotøyedråper, oppløsning;Øyepreparat;Øyepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS01AA/S01AA med antibiotika;
+Dispergerbar tablett;Tablett;Tablett;TABL;stk;;
+Enterokapsel;Tablett;Tablett;TABL;stk;;
+Enterokapsel, hard;Tablett;Tablett;TABL;stk;;
+Granulat;Oralt pulver;Oralt pulver;ORAL POWD;vekt;;
+Granulat til dråper;Oral oppløsning_pulver;Oral oppløsning;ORAL SOLU;vekt;;
+Granulat til dråper, oppløsning;Oral oppløsning_pulver;Oral oppløsning;ORAL SOLU;vekt;;
+Granulat til mikstur;Oral oppløsning_pulver;Oral oppløsning;ORAL SOLU;vekt;;
+Granulat til mikstur, oppløsning;Oral oppløsning_pulver;Oral oppløsning;ORAL SOLU;vekt;;
+Granulat til mikstur, suspensjon;Oral oppløsning_pulver;Oral oppløsning;ORAL SOLU;vekt;;
+Hudspray;Hudpreparat;Hudpreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare D06/QD06 med antibiotika;
+Infusjonsvæske;Infusjon;Injeksjon;INJ;volum;Lite bruk av infusjon. Presenteres derfor sammen med injeksjon;
+Infusjonsvæske, oppløsning;Infusjon;Injeksjon;INJ;volum;Lite bruk av infusjon. Presenteres derfor sammen med injeksjon;
+Injeksjonsvæske;Injeksjon;Injeksjon;INJ;volum;;
+Injeksjonsvæske, oppløsning;Injeksjon;Injeksjon;INJ;volum;;
+Injeksjonsvæske, suspensjon;Injeksjon;Injeksjon;INJ;volum;;
+Intramammarie;Intramammarie;Intramammarie;INTRAM;stk;FEST i stk? Kari: ikke sikker;
+Intramammarie, salve;Intramammarie;Intramammarie;INTRAM;stk;FEST i stk? Kari: ikke sikker;
+Intramammarie, suspensjon;Intramammarie;Intramammarie;INTRAM;stk;FEST i stk? Kari: ikke sikker;
+Kapsel;Tablett;Tablett;TABL;stk;;
+Kapsel, hard;Tablett;Tablett;TABL;stk;;
+Kapsel med modifisert frisetting, hard;Tablett;Tablett;TABL;stk;;
+Konsentrat til infusjonsvæske, oppløsning;Infusjon;Injeksjon;INJ;volum;;
+Konsentrat til mikstur;Oral oppløsning;Oral oppløsning;ORAL SOLU;volum;;
+Krem;Hudpreparat;Hudpreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare D06/QD06 med antibiotika;
+Liniment, suspensjon;Øyepreparat;Øyepreparat;Ikke relevant - ikke inkl. i ESVAC ;volum;Bare QS01AA/S01AA med antibiotika? Går det an å finne preparater med den formen?;
+Medisinpellet;Medisinpellet;Medisinpellet;PREMIX;vekt;For ESVAC regnes tilbake til PREMIX for medisinfor ikke standard form i VetReg;
+Mikstur;Oral oppløsning;Oral oppløsning;ORAL SOLU;volum;;
+Mikstur, oppløsning;Oral oppløsning;Oral oppløsning;ORAL SOLU;volum;;
+Mikstur, suspensjon;Oral oppløsning;Oral oppløsning;ORAL SOLU;volum;;
+Oppløsning;Øyepreparat;Øyepreparat;Ikke relevant - ikke inkl. i ESVAC ;volum;Bare QS01AA/S01AA med antibiotika? Går det an å finne preparater med den formen?;
+Oppløsning til bruk i drikkevann;Oral oppløsning;Oral oppløsning;ORAL SOLU;volum;;
+Oral oppløsning;Oral oppløsning;Oral oppløsning;ORAL SOLU;volum;;
+Oralpasta;Oralpasta;Oralpasta;ORAL PASTE;stk;;
+Pasta;Pasta;Oralpasta;ORAL PASTE;stk;Tror dette er Socatyl oral pasta;Mulig å få en preparatliste
+Premiks til medisinert fôr;Premiks;Premiks ;Premix;vekt;;
+Premiks til medisinert fÃ´r;Premiks;Premiks ;Premix;vekt;;
+Premiks til medisinfôr;Premiks;Premiks;Premix;vekt;;
+Premiks til fôrtilsetning;Premiks;Premiks;Ikke relevant - ikke inkl. i ESVAC ;vekt;Gjelder monensin og narasin etc.;
+Premiks til  fôrtilsetning;Premiks;Premiks;Ikke relevant - ikke inkl. i ESVAC ;vekt;Gjelder monensin og narasin etc.;Feilskrevet i FEST, dobbelt mellomrom
+Pulver;Oralt pulver;Oralt pulver;ORAL POWD;vekt;;
+Pulver og væske til infusjonsvæske;Infusjon_pulver;Injeksjon;INJ;vekt;Lite bruk av infusjon. Presenteres derfor sammen med injeksjon;
+Pulver og væske til injeksjonsvæske;Injeksjon_pulver;Injeksjon;INJ;vekt;;
+Pulver og væske til injeksjonsvæske, oppløsning;Injeksjon_pulver;Injeksjon;INJ;vekt;;
+Pulver til bruk i drikkevann;Oral oppløsning_pulver;Oral oppløsning;ORAL SOLU;vekt;;
+Pulver til injeksjons-/infusjonsvæske;Injeksjon_pulver;Injeksjon;INJ;vekt;Lite bruk av infusjon. Presenteres derfor sammen med injeksjon;
+Pulver til injeksjons-/infusjonsvæske, oppløsning;Injeksjon_pulver;Injeksjon;INJ;vekt;Lite bruk av infusjon. Presenteres derfor sammen med injeksjon;
+Pulver til injeksjonsvæske;Injeksjon_pulver;Injeksjon;INJ;vekt;;
+Pulver til injeksjonsvæske, oppløsning;Injeksjon_pulver;Injeksjon;INJ;vekt;;
+Pulver til mikstur;Oral oppløsning_pulver;Oral oppløsning;ORAL SOLU;vekt;;
+Pulver til mikstur, oppløsning;Oral oppløsning_pulver;Oral oppløsning;ORAL SOLU;vekt;;
+Pulver til mikstur, suspensjon;Oral oppløsning_pulver;Oral oppløsning;ORAL SOLU;vekt;;
+Salve;Hudpreparat;Hudpreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare D06/QD06 med antibiotika;
+Tablett;Tablett;Tablett;TABL;stk;;
+Tyggetablett;Tablett;Tablett;TABL;stk;;
+Uteritorie, tablett;Uteritorie;Uteritorie;INTRAUT;stk;;
+Vaginalkrem;Vaginalkrem;Vaginalkrem;Ikke relevant - ikke inkl. i ESVAC ;stk?;Kun humanprep;
+Vaginaltablett;Vaginaltablett;Vaginaltablett;Ikke relevant - ikke inkl. i ESVAC ;stk;Kun humanprep;
+Vaginalvæske;Vaginalvæske;Vaginalvæske;Ikke relevant - ikke inkl. i ESVAC ;volum?;Kun humanprep;
+Vagitorie;Vagitorie;Vagitorie;Ikke relevant - ikke inkl. i ESVAC ;stk;Kun humanprep;
+Øredråper;Ørepreparat;Ørepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS02AA/S02AA med antibiotika;
+Øredråper, oppløsning;Ørepreparat;Ørepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS02AA/S02AA med antibiotika;
+Øredråper, suspensjon;Ørepreparat;Ørepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS02AA/S02AA med antibiotika;
+Øredråper/liniment, suspensjon;Ørepreparat;Ørepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS02AA/S02AA med antibiotika;
+Øregel;Ørepreparat;Ørepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS02AA/S02AA med antibiotika;
+Øreskyllevæske;Ørepreparat;Ørepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS02AA/S02AA med antibiotika;
+Øye-/øredråper;Øye_ørepreparat;Øye_ørepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS03CA/S03CA med antibiotika;
+Øyedråper;Øyepreparat;Øyepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS01AA/S01AA med antibiotika;
+Øyedråper, oppløsning;Øyepreparat;Øyepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS01AA/S01AA med antibiotika;
+Øyedråper, suspensjon;Øyepreparat;Øyepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS01AA/S01AA med antibiotika;
+Øyesalve;Øyepreparat;Øyepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS01AA/S01AA med antibiotika;
+Depot<f8>yedr<e5>per, oppl<f8>sning;Øyepreparat;Øyepreparat;Ikke relevant - ikke inkl. i ESVAC ;Ikke relevant - antall rapporter per dyreart enhet;Bare QS01AA/S01AA med antibiotika;Feilskrevet i FEST eller etter vår innlesning av FEST
+Konsentrat til infusjonsv<e6>ske, oppl<f8>sning;Infusjon;Injeksjon;INJ;volum;;Feilskrevet i FEST eller etter vår innlesning av FEST
+Mikstur, oppl<f8>sning;Oral oppløsning;Oral oppløsning;ORAL SOLU;volum;;Feilskrevet i FEST eller etter vår innlesning av FEST
+Pulver og v<e6>ske til injeksjonsv<e6>ske, oppl<f8>sning;Injeksjon_pulver;Injeksjon;INJ;vekt;;Feilskrevet i FEST eller etter vår innlesning av FEST

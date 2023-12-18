@@ -1,0 +1,91 @@
+Virkestoff.Navn;ABklasse;Abklasse 2;Virkestoff.Navn_Engelsk;Abklasse_Engelsk;ABrapport;Andre kommentarer/ATC_ATCvet klasser;;;;;
+Aciklovir;;;;;Nei;D, S og J05 (antivirale);;;;;
+Amoksicillin;Penicilliner med utvidet spekter;Penicilliner;Amoxicillin;Penicillins with extended spectrum;Ja;;;;;;
+Ampicillin;Penicilliner med utvidet spekter;Penicilliner;Ampicillin;Penicillins with extended spectrum;Ja;;;;;;
+Azitromycin;Makrolider;Makrolider;Azitromycin;Macrolides;Ja;;;;;;
+Bacitracin;Andre antibakterielle midler;Andre antibakterielle midler;Bacitracin;Other antibacterials;Ja;D;;;;;benethamine benzylpenicillin
+Benzylpenicillin;Beta-laktamaseømfintlige penicilliner;Penicilliner;Benzylpenicillin;Beta-laktamase sensitive penicillins;Ja;;;;;;benzathine benzylpenicillin
+Benzylpenicillinbenzatin;Beta-laktamaseømfintlige penicilliner;Penicilliner;Benzathine benzylpenicillin;Beta-laktamase sensitive penicillins;Ja;;;;;;cefapirin benzathine
+Benzylpenicillinnatrium;Beta-laktamaseømfintlige penicilliner;Penicilliner;Benzylpenicillin;Beta-laktamase sensitive penicillins;Ja;Rettes til Benzylpenicillin i FESTVet;;;;;cefalexin benzathine
+Benzylpenicillinprokain;Beta-laktamaseømfintlige penicilliner;Penicilliner;Procaine penicillin;Beta-laktamase sensitive penicillins;Ja;;;;;;cloxacillin benzathine
+Cefaleksin;Førstegenerasjons cefalosporiner;Førstegenerasjons cefalosporiner;Cefalexin;First generation cephalosporins;Ja;;;;;;oxacillin benzathine
+Cefalotin;Førstegenerasjons cefalosporiner;Førstegenerasjons cefalosporiner;Cefalotin;First generation cephalosporins;Ja;;;;;;penethamate hydriodide
+Cefovecin;Tredjegenerasjons cefalosporiner;Tredjegenerasjons cefalosporiner;Cefovecin;Third generation cephalosporins;Ja;;;;;;procaine penicillin
+Ceftazidim;Tredjegenerasjons cefalosporiner;Tredjegenerasjons cefalosporiner;Ceftazidime;Tredjegenerasjons cefalosporiner;Ja;;;;;;
+Ceftiofur;Tredjegenerasjons cefalosporiner;Tredjegenerasjons cefalosporiner;Ceftiofur;Tredjegenerasjons cefalosporiner;Ja;;;;;;
+Ciprofloksacin;Fluorokinoloner;Kinoloner;Ciprofloxacin;Fluoroquinolones;Ja;;;;;;
+Deksametason;;;;;Nei;D;;;;;
+Dihydrostreptomycin;Aminoglycosider;Aminoglycosider;Dihydrostreptomycin;Aminoglycosides;Ja;;;;;;
+Dihydrostreptomycinsulfat til dyr;Aminoglycosider;Aminoglycosider;Dihydrostreptomycin;Aminoglycosides;Ja;Rettes til Dihydrostreptomycin i FESTVet;;;;;
+Dikloksacillin;Beta-laktamaseresistente penicilliner;Penicilliner;Dicloxacillin;Beta-laktamaseresistant penicillins;Ja;;;;;;
+Doksysyklin;Tetrasykliner;Tetrasykliner;Doxycycline;Tetracyclines;Ja;;;;;;
+Enrofloksacin;Fluorokinoloner;Kinoloner;Enrofloxacin;Fluoroquinolones;Ja;;;;;;
+Erytromycin;Makrolider;Makrolider;Erythromycin;Macrolides;Ja;;;;;;
+Erytromycinetylsuksinat;Makrolider;Makrolider;Erythromycin;Macrolides;Ja;Rettes til Erythromycin i FESTVet;;;;;
+Fenoksymetylpenicillin;Beta-laktamaseømfintlige penicilliner;Penicilliner;Phenoxymethylpenicillin;Beta-laktamase sensitive penicillins;Ja;;;;;;
+Florfenikol;Amfenikoler;Amfenikoler;Florfenicol;Amphenicols;Ja;;;;;;
+Fluniksin;;;;;Nei;M;;;;;
+Fluocinolonacetonid;;;;;Nei;D, S;;;;;
+Formosulfatiazol;Sulfonamider;Sulfonamider;Formosulfathiazole;Sulfonamides;Ja;;;;;;
+Framycetin;Aminoglycosider;Aminoglycosider;Framycetin;Aminoglycosides;Ja;;;;;;
+Fusidinsyre;Andre antibakterielle midler;Andre antibakterielle midler;Fusidic acid;Other antibacterials;Ja;;;;;;
+Gamitromycin;Makrolider;Makrolider;Gamithromycin;Macrolides;Ja;;;;;;
+Gentamicin;Aminoglycosider;Aminoglycosider;Gentamicin;Aminoglycosides;Ja;;;;;;
+Gentamicinsulfat;Aminoglycosider;Aminoglycosider;Gentamicin;Aminoglycosides;Ja;Rettes til Gentamicin i FESTVet;;;;;
+Gramicidin;Andre antibakterielle midler;Andre antibakterielle midler;Gramicidin;Other antibacterials;Ja;S;;;;;
+Hydrogenperoksyd;;;;;Nei;D;;;;;
+Hydrokortison;;;;;Nei;A, C ,D, H og S;;;;;
+Idoksuridin;;;;;Nei;J05 Antivirale;;;;;
+Imikvimod;;;;;Nei;D;;;;;
+Klaritromycin;Makrolider;Makrolider;Clarithromycin;Macrolides;Ja;;;;;;
+Klindamycin;Linkosamider;Linkosamider;Clindamycin;Lincosamides;Ja;;;;;;
+Kloksacillin;Beta-laktamaseresistente penicilliner;Penicilliner;Cloxacillin;Beta-laktamaseresistant penicillins;Ja;;;;;;
+Kloramfenikol;Amfenikoler;Amfenikoler;Chloramphenicol;Amphenicols;Ja;Antagelig bare øyedråper men tabletter kan brukes til smådyr (forbudt til matproduserende);;;;;
+Klorheksidin;;;;;Nei;D;;;;;
+Klortetracyklin;Tetrasykliner;Tetrasykliner;Chlortetracycline;Tetracyclines;Ja;;;;;;
+Klotrimazol;;;;;Nei;S, G (humant);;;;;
+Lincomycin;Linkosamider;Linkosamider;Lincomycin;Lincosamides;Ja;;;;;;
+Lymesyklin;Tetrasykliner;Tetrasykliner;Lymecycline;Tetracyclines;Ja;;;;;;
+Marbofloksacin;Fluorokinoloner;Fluorokinoloner;Fluoroquinolones;Marbofloxacin;Ja;;;;;;
+Metenamin;Andre antibakterielle midler;Andre antibakterielle midler;Methenamine;Other antibacterials;Ja;;;;;;
+Metronidazol;Nitroimidazolderivater;Andre antibakterielle midler;Metronidazole;Imidazole derivatives;Ja;QJ01XD01 metronidazole;;;;;
+Mikonazol;;;;;Nei;D, S;;;;;
+Mometason;;;;;Nei;D, R, S;;;;;
+Monensin;Ionoforer;Koksidiostatika;Narasin;Coccidiostatics;Ja;IKKE ESVAC;;;;;
+Narasin;Ionoforer;Koksidiostatika;Narasin;Coccidiostatics;Ja;IKKE ESVAC;;;;;
+Natriumfusidat;Andre antibakterielle midler;Andre antibakterielle midler;Fusidic acid;Other antibacterials;Ja;D;;;;;
+Neomycin;Aminoglycosider;Aminoglycosider;Neomycin;Aminoglycosides;Ja;;;;;;
+Nitrofurantoin;Andre antibakterielle midler;Andre antibakterielle midler;Nitrofurantoin;Other antibacterials;Ja;;;;;;
+Nystatin;Andre antibakterielle midler;Andre antibakterielle midler;Nystatin;Other antibacterials;Ja;D, G ;;;;;
+Ofloksacin;Fluorokinoloner;Fluorokinoloner;Ofloxacin;Fluoroquinolones;Ja;;;;;;
+Oksolinsyre;Andre kinoloner;Andre kinoloner;Oxolinic acid;Other quinolones;Ja;;;;;;
+Oksytetrasyklin;Tetrasykliner;Tetrasykliner;Oxytetracycline;Tetracyclines;Ja;;;;;;
+Oksytetrasyklinhydroklorid;Tetrasykliner;Tetrasykliner;Oxytetracycline;Tetracyclines;Ja;Rettes til Oksytetrasyklin i FESTVet;;;;;
+Orbifloksacin;Fluorokinoloner;Fluorokinoloner;Orbifloxacin;Fluoroquinolones;Ja;;;;;;
+Penetamathydrojodid;Beta-laktamaseømfintlige penicilliner;Penicilliner;Penethamate hydriodide;Beta-laktamase sensitive penicillins;Ja;;;;;;
+Penicillinbenetamin;Beta-laktamaseømfintlige penicilliner;Penicilliner;Benethamine benzylpenicillin;Beta-laktamase sensitive penicillins;Ja;;;;;;
+Pivmecillinam;Penicilliner med utvidet spekter;Penicilliner;Pivmecillinam;Penicillins with extended spectrum;Ja;;;;;;
+Podofyllotoksin;;;;;Nei;D;;;;;
+Polikresulen;;;;;Nei;G51AX - antiseptika ;;;;;
+Polymyksin B;Andre antibakterielle midler;Andre antibakterielle midler;Polymyksin B;Other antibacterials;Ja;D, S;;;;;
+Posakonazol;;;;;Nei;J02 Antimykotika;;;;;
+Povidon, jodert;;;;;Nei;S;;;;;
+Pradofloksacin;Fluorokinoloner;Fluorokinoloner;Pradofloxacin;Fluoroquinolones;Ja;;;;;;
+Prednisolon;;;;;Nei;H, S;;;;;
+Prokainpenicillin;Beta-laktamaseømfintlige penicilliner;Penicilliner;Procaine penicillin;Beta-laktamase sensitive penicillins;Ja;;;;;;
+Rifampicin;Andre antibakterielle midler;Andre antibakterielle midler;Rifampicin;Other antibacterials;Ja;J04A ab middel mot tubekulose men blir brukt på spes. Indikasjon til føll;;;;;
+Spectinomycin;Andre antibakterielle midler;Andre antibakterielle midler;Spectinomycin;Other antibacterials;Ja;;;;;;
+Spiramycin;Makrolider;Makrolider;Spiramycin;Macrolides;Ja;;;;;;
+Streptomycin;Aminoglycosider;Aminoglycosider;Streptomycin;Aminoglycosides;Ja;;;;;;
+Sulfadiazin;Sulfonamider;Sulfonamider;Sulfadiazine;Sulfonamides;Ja;;;;;;
+Sulfadimidin;Sulfonamider;Sulfonamider;Sulfadimidine;Sulfonamides;Ja;;;;;;
+Sulfadoksin;Sulfonamider;Sulfonamider;Sulfadoxine;Sulfonamides;Ja;;;;;;
+Sulfametoksazol;Sulfonamider;Sulfonamider;Sulfamethoxazole;Sulfonamides;Ja;;;;;;
+Sulfanilamid;Sulfonamider;Sulfonamider;Sulfanilamide;Sulfonamides;Ja;;;;;;
+Sulfatiazol;Sulfonamider;Sulfonamider;Sulfathiazole;Sulfonamides;Ja;;;;;;
+Sølvsulfadiazin;Sulfonamider;Sulfonamider;Silver sulfadiazine;Sulfonamides;Ja;D;;;;;
+Tetrasyklin;Tetrasykliner;Tetrasykliner;Tetracycline;Tetracyclines;Ja;;;;;;
+Tiamulin;Pleuromutiliner;Pleuromutiliner;Tiamulin;Pleuromutilines;Ja;;;;;;
+Tobramycin;Aminoglycosider;Aminoglycosider;Tobramycin;Aminoglycosides;Ja;;;;;;
+Trimetoprim;Trimetoprim og derviater;Trimetoprim;Trimethoprim;Trimthoprim and derivatives;Ja;;;;;;
+;Ionoforer;;;;;;;;;;

@@ -8,3 +8,4 @@ Makefile
 ^\.lintr$
 ^\.vscode$
 inst/shinyapps-io
+data_processing
